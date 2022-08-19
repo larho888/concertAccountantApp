@@ -11,9 +11,8 @@ const AddShow = (props) => {
         setUserInput(e.target.value)
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const database = getDatabase(Firebase);
+    const handleSubmit = () => {
+        const database = getDatabase(firebase);
         const dbRef = ref(database);
         push(dbRef, props.ticket);
         // setUserInput("");
@@ -22,7 +21,8 @@ const AddShow = (props) => {
     return (
         <section>
             <div className="wrapper">
-                <button onClick={() => {
+                <button onClick={(e) => {
+                e.preventDefault();
                 // console.log(props.id)
                 // setUserInput(props.id)
                 // console.log(userInput)
