@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { getDatabase, push, ref } from 'firebase/database';
-import firebase from './firebase';
+import Firebase from './Firebase';
 
 const AddShow = () => {
 
@@ -12,7 +12,7 @@ const AddShow = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const database = getDatabase(firebase);
+        const database = getDatabase(Firebase);
         const dbRef = ref(database);
         push(dbRef, userInput);
         setUserInput("");
