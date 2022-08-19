@@ -2,6 +2,7 @@ import { useState } from "react";
 import { getDatabase, push, ref } from 'firebase/database';
 import firebase from './Firebase';
 
+
 const AddShow = (props) => {
 
     const [userInput, setUserInput] = useState("");
@@ -10,8 +11,9 @@ const AddShow = (props) => {
         setUserInput(e.target.value)
     }
 
-    const handleSubmit = () => {
-        const database = getDatabase(firebase);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const database = getDatabase(Firebase);
         const dbRef = ref(database);
         push(dbRef, props.ticket);
         // setUserInput("");
