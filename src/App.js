@@ -48,13 +48,13 @@ function App() {
         apikey: key,
       },
     }).then((response) => {
+      console.log(response.data.id)
       setTicket({
-        name: response.data.name
+        name: response.data.name,
+        id: response.data.id
       })
     })
   }, [id]);
-
-  console.log(ticket.name)
 
   return (
     <div className="App">
@@ -67,6 +67,7 @@ function App() {
                 setId(data.id)
 
                 }}>More info</button>
+              <AddShow ticket={ticket}/>
               </>
             )
         

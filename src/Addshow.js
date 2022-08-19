@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { getDatabase, push, ref } from 'firebase/database';
-import firebase from './firebase';
+import firebase from './Firebase';
 
-const AddShow = () => {
+const AddShow = (props) => {
 
     const [userInput, setUserInput] = useState("");
 
@@ -10,22 +10,27 @@ const AddShow = () => {
         setUserInput(e.target.value)
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = () => {
         const database = getDatabase(firebase);
         const dbRef = ref(database);
-        push(dbRef, userInput);
-        setUserInput("");
+        push(dbRef, props.ticket);
+        // setUserInput("");
     }
 
     return (
         <section>
             <div className="wrapper">
-                <form action="submit" className="addShowForm">
+                <button onClick={() => {
+                // console.log(props.id)
+                // setUserInput(props.id)
+                // console.log(userInput)
+                handleSubmit();
+                }}>Save</button>
+                {/* <form action="submit" className="addShowForm">
                     <label htmlFor="showChosen">Add a to create your Workout</label>
                     <input type="text" id="showChosen" onChange={handleInputChange} value={userInput}/>
                     <button onClick={handleSubmit}>Choose a show</button>
-                </form>
+                </form> */}
             </div>
         </section>
     )
