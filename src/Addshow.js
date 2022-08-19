@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getDatabase, push, ref } from 'firebase/database';
+import { getDatabase, push, ref, remove } from 'firebase/database';
 import firebase from './Firebase';
 
 
@@ -18,6 +18,12 @@ const AddShow = (props) => {
         // setUserInput("");
     }
 
+    const handleRemove = () => {
+        const database = getDatabase(firebase)
+        const dbRef = ref(database)
+        remove(dbRef, props.ticket)
+    }
+
     return (
         <section>
             <div className="wrapper">
@@ -28,6 +34,11 @@ const AddShow = (props) => {
                 // console.log(userInput)
                 handleSubmit();
                 }}>Save</button>
+                <button onClick={(e) => {
+                e.preventDefault();
+                handleRemove();
+                }}
+                >remove</button>
                 {/* <form action="submit" className="addShowForm">
                     <label htmlFor="showChosen">Add a to create your Workout</label>
                     <input type="text" id="showChosen" onChange={handleInputChange} value={userInput}/>
