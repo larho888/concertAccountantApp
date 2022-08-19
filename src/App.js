@@ -1,31 +1,89 @@
-import logo from "./logo.svg";
 import axios from "axios";
 import "./App.css";
-
-const key = `0TsZKUciU5HKm4ylnIBkwVoD8U4aPAgY`;
+import { useEffect, useState } from 'react';
+import AddShow from "./Addshow";
 
 function App() {
+
+  const [ticket, setTicket] = useState({
+    name: "",
+    id: "",
+    priceRanges: [],
+  })
+
+  const [data, setData] = useState([]);
+
+  //userinput for keyword
+  const [keyWord, setKeyWord] = useState('');
+
+  //id on the selected event
+  const [id, setId] = useState('');
+
+  useEffect(() => {
+    const key = `0TsZKUciU5HKm4ylnIBkwVoD8U4aPAgY`;
+    axios({
+      url: `https://app.ticketmaster.com/discovery/v2/events`,
+      method: "GET",
+      dataResponse: "json",
+      params: {
+        format: "json",
+        apikey: key,
+        keyword:"drake",
+        size: 10
+      },
+    }).then((response) => {
+      const dataTest = response.data._embedded.events;
+      setData(dataTest);
+  })
+  }, []);
+
+  useEffect(() => {
+    const key = `0TsZKUciU5HKm4ylnIBkwVoD8U4aPAgY`;
+    axios({
+      url: `https://app.ticketmaster.com/discovery/v2/events/${id}`,
+      method: "GET",
+      dataResponse: "json",
+      params: {
+        format: "json",
+        apikey: key,
+      },
+    }).then((response) => {
+      setTicket({
+        name: response.data.name
+      })
+    })
+  }, [id]);
+
+  console.log(ticket.name)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        {data.map((data) => {
+            return (
+              <>
+              <p key={data.id}>{data.name}</p>
+              <p>{data.id}</p>
+              <button onClick={() => {
+                setId(data.id)
+
+                }}>More info</button>
+              </>
+            )
+        
+        })}
+        <AddShow />
     </div>
   );
 }
 
 export default App;
+
+// onclick save data.id of event into ID state
+// run ID through API
+// save API (will be an oject) into ticket state
+// display info on screen
+
+
 
 // PSUEDOCODE
 
