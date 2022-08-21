@@ -30,8 +30,9 @@ function App() {
  
   
 
-useEffect(() => {
-  axios({
+
+  const getAnswer = async () => {
+    await axios({
       url: `https://app.ticketmaster.com/discovery/v2/events`,
       method: "GET",
       dataResponse: "json",
@@ -47,7 +48,8 @@ useEffect(() => {
   }).catch((error) => {
     alert(error.message)
   });
-  }, [track]);
+} 
+
 
   useEffect(() => {
     axios({
@@ -90,6 +92,7 @@ useEffect(() => {
           e.preventDefault()
           setTracker(prevCount => prevCount +1);
           setShow(true);
+          getAnswer();
           console.log(keyWord)
           console.log(data);
           // setSize(10)
