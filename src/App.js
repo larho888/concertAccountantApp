@@ -25,6 +25,8 @@ function App() {
   const [size, setSize] = useState(0);
 
   const [show, setShow] = useState(false);
+
+  const [moreInfo, setMoreInfo] = useState(false)
   
   const key = `0TsZKUciU5HKm4ylnIBkwVoD8U4aPAgY`;
  
@@ -84,11 +86,15 @@ function App() {
             <p>{data.dates.start.localDate}</p>
             <p>{data.dates.start.localTime}</p>
             <p>{data.dates.timezone}</p>
+
+              {/* 
             <p>{data.priceRanges[0].currency}</p>
             <p>{data.priceRanges[0].min}</p>
-            <p>{data.priceRanges[0].max}</p>
+            <p>{data.priceRanges[0].max}</p> */}
             <button onClick={() => {
               setId(data.id)
+              setMoreInfo(true);
+              console.log(id)
               }}
               >More info
             </button>
@@ -119,7 +125,6 @@ function App() {
             // )
     
               
-          
         
         // })}
         }}>search</button>
