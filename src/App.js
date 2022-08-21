@@ -1,7 +1,8 @@
 import axios from "axios";
 import "./App.css";
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AddShow from "./Addshow";
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
 
   const [size, setSize] = useState(0);
 
+  // const [show, setShow] = useState(false);
   
   const key = `0TsZKUciU5HKm4ylnIBkwVoD8U4aPAgY`;
  
@@ -64,6 +66,21 @@ useEffect(() => {
     })
   }, [id]);
 
+  // const renderInfo = () => {
+  //   {data.map((data) => {
+  //     return (
+  //       <>
+  //       <p key={data.id}>{data.name}</p>
+  //       <p>{data.id}</p>
+  //       <button onClick={() => {
+  //         setId(data.id)
+  //         // moreInfo();
+  //         }}>More info</button>
+  //       <AddShow ticket={ticket}/>
+  //       </>
+  //     )
+  // })}
+
   return (
     <div className="App">
         <input placeholder="insert keyword" type="text" onChange={(e) => {
@@ -72,6 +89,7 @@ useEffect(() => {
         <button onClick={(e) => {
           e.preventDefault()
           setTracker(prevCount => prevCount +1);
+          // setShow(true);
           setSize(10)
           // {data.map((data) => {
           //   console.log(data.name)
@@ -86,7 +104,8 @@ useEffect(() => {
         
         // })}
         }}>search</button>
-         {data.map((data) => {
+          {/* {show ? renderInfo() : <React.Fragment />} */}
+          {data.map((data) => {
             return (
               <>
               <p key={data.id}>{data.name}</p>
@@ -103,6 +122,7 @@ useEffect(() => {
     </div>
   );
 }
+// }
 
 export default App;
 
