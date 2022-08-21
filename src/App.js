@@ -45,11 +45,12 @@ function App() {
     }).then((response) => {
       const dataTest = response.data._embedded.events;
       setData(dataTest);
-  }).catch((error) => {
-    alert(error.message)
-  });
-} 
-
+    }).catch((error) => {
+      alert(error.message)
+    });
+  } 
+  
+  
 
   useEffect(() => {
     axios({
@@ -70,15 +71,31 @@ function App() {
 
   const renderInfo = () => {
     return data.map((data) => {
+    
       return (
         <div key={data.id}>
-          <p>{data.name}</p>
-          <p>{data.id}</p>
-          <button onClick={() => {
-            setId(data.id)
-            }}>More info</button>
-          <AddShow ticket={ticket}/>
+          <div>
+            <img src={data.images[0].url} alt={data.name}/>
+            <p>{data.name}</p>
+            <p>{data._embedded.venues[0].name}</p>
+            <p>{data._embedded.venues[0].city.name}</p>
+            <p>{data._embedded.venues[0].address.line1}</p>
+            <p>{data._embedded.venues[0].url}</p>
+            <p>{data.dates.start.localDate}</p>
+            <p>{data.dates.start.localTime}</p>
+            <p>{data.dates.timezone}</p>
+            <p>{data.priceRanges[0].currency}</p>
+            <p>{data.priceRanges[0].min}</p>
+            <p>{data.priceRanges[0].max}</p>
+            <button onClick={() => {
+              setId(data.id)
+              }}
+              >More info
+            </button>
+            <AddShow ticket={ticket}/>
+
           </div>
+        </div>
       )
   })}
 
@@ -86,15 +103,12 @@ function App() {
     <div className="App">
         <input value={keyWord} placeholder="insert keyword" type="text" onChange={(e) => {
           setKeyWord(e.target.value)
-          console.log(data);
         }} ></input>
         <button onClick={(e) => {
           e.preventDefault()
           setTracker(prevCount => prevCount +1);
           setShow(true);
           getAnswer();
-          console.log(keyWord)
-          console.log(data);
           // setSize(10)
           // {data.map((data) => {
             // console.log(data.name)
