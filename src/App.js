@@ -24,7 +24,7 @@ function App() {
 
   const [size, setSize] = useState(0);
 
-  // const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
   
   const key = `0TsZKUciU5HKm4ylnIBkwVoD8U4aPAgY`;
  
@@ -39,7 +39,7 @@ useEffect(() => {
         format: "json",
         apikey: key,
         keyword: keyWord,
-        size: size
+        size: 10
       },
     }).then((response) => {
       const dataTest = response.data._embedded.events;
@@ -66,59 +66,59 @@ useEffect(() => {
     })
   }, [id]);
 
-  // const renderInfo = () => {
-  //   {data.map((data) => {
-  //     return (
-  //       <>
-  //       <p key={data.id}>{data.name}</p>
-  //       <p>{data.id}</p>
-  //       <button onClick={() => {
-  //         setId(data.id)
-  //         // moreInfo();
-  //         }}>More info</button>
-  //       <AddShow ticket={ticket}/>
-  //       </>
-  //     )
-  // })}
+  const renderInfo = () => {
+    return data.map((data) => {
+      return (
+        <div key={data.id}>
+          <p>{data.name}</p>
+          <p>{data.id}</p>
+          <button onClick={() => {
+            setId(data.id)
+            }}>More info</button>
+          <AddShow ticket={ticket}/>
+          </div>
+      )
+  })}
 
   return (
     <div className="App">
-        <input placeholder="insert keyword" type="text" onChange={(e) => {
+        <input value={keyWord} placeholder="insert keyword" type="text" onChange={(e) => {
           setKeyWord(e.target.value)
+          console.log(data);
         }} ></input>
         <button onClick={(e) => {
           e.preventDefault()
           setTracker(prevCount => prevCount +1);
-          // setShow(true);
-          setSize(10)
+          setShow(true);
+          console.log(keyWord)
+          console.log(data);
+          // setSize(10)
           // {data.map((data) => {
-          //   console.log(data.name)
-          //   return (
-          //     <p>{data.name}</p>
-          //   )
-          //   // <><p key={data.id}>{data.name}</p><p>{data.id}</p><button onClick={() => {
-          //   //   setId(data.id);
-          //   // } }>More info</button><AddShow ticket={ticket} /></>
+            // console.log(data.name)
+            // return (
+            //   <><p key={data.id}>{data.name}</p><p>{data.id}</p><button onClick={() => {
+            //     setId(data.id);
+            //   } }>More info</button><AddShow ticket={ticket} /></>
+            // )
+    
               
           
         
         // })}
         }}>search</button>
-          {/* {show ? renderInfo() : <React.Fragment />} */}
-          {data.map((data) => {
+        {show ? renderInfo() : <React.Fragment />}
+          {/* {data.map((data) => {
             return (
               <>
               <p key={data.id}>{data.name}</p>
               <p>{data.id}</p>
               <button onClick={() => {
                 setId(data.id)
-                // moreInfo();
                 }}>More info</button>
               <AddShow ticket={ticket}/>
               </>
             )
-        
-        })}
+        })} */}
     </div>
   );
 }
