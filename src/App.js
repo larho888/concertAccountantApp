@@ -30,9 +30,6 @@ function App() {
   
   const key = `0TsZKUciU5HKm4ylnIBkwVoD8U4aPAgY`;
  
-  
-
-
   const getAnswer = async () => {
     await axios({
       url: `https://app.ticketmaster.com/discovery/v2/events`,
@@ -52,8 +49,6 @@ function App() {
     });
   } 
   
-  
-
   useEffect(() => {
     axios({
       url: `https://app.ticketmaster.com/discovery/v2/events/${id}`,
@@ -71,9 +66,17 @@ function App() {
     })
   }, [id]);
 
+  const getMoreInfo = () => {
+      return(
+        <div>
+           <div key={ticket.name}>
+            <p>{ticket.name}</p>
+          </div>
+        </div>
+      )
+  }
   const renderInfo = () => {
     return data.map((data) => {
-    
       return (
         <div key={data.id}>
           <div>
@@ -84,22 +87,39 @@ function App() {
             <p>{data._embedded.venues[0].address.line1}</p>
             <p>{data._embedded.venues[0].url}</p>
             <p>{data.dates.start.localDate}</p>
-            <p>{data.dates.start.localTime}</p>
+             <p>
+              {new Date(data.dates.start.dateTime).toLocaleTimeString("en-IN", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </p>
             <p>{data.dates.timezone}</p>
-
-              {/* 
-            <p>{data.priceRanges[0].currency}</p>
+            {data.id === ticket.id && getMoreInfo()}
+            {             
+               data.priceRanges === undefined
+            ? 
+              <div>
+                <p>Price Range not available</p>
+              </div>
+            :
+              <div>
+                <p>{data.priceRanges[0].currency}</p>
+                <p>{Math.round(data.priceRanges[0].min)}</p>
+                <p>{Math.round(data.priceRanges[0].max)}</p>
+              </div> 
+              
+          }
+      {/*   <p>{data.priceRanges[0].currency}</p>
             <p>{data.priceRanges[0].min}</p>
             <p>{data.priceRanges[0].max}</p> */}
+            
             <button onClick={() => {
-              setId(data.id)
               setMoreInfo(true);
-              console.log(id)
+              setId(data.id)
               }}
               >More info
             </button>
             <AddShow ticket={ticket}/>
-
           </div>
         </div>
       )
@@ -115,32 +135,8 @@ function App() {
           setTracker(prevCount => prevCount +1);
           setShow(true);
           getAnswer();
-          // setSize(10)
-          // {data.map((data) => {
-            // console.log(data.name)
-            // return (
-            //   <><p key={data.id}>{data.name}</p><p>{data.id}</p><button onClick={() => {
-            //     setId(data.id);
-            //   } }>More info</button><AddShow ticket={ticket} /></>
-            // )
-    
-              
-        
-        // })}
         }}>search</button>
         {show ? renderInfo() : <React.Fragment />}
-          {/* {data.map((data) => {
-            return (
-              <>
-              <p key={data.id}>{data.name}</p>
-              <p>{data.id}</p>
-              <button onClick={() => {
-                setId(data.id)
-                }}>More info</button>
-              <AddShow ticket={ticket}/>
-              </>
-            )
-        })} */}
     </div>
   );
 }
@@ -152,8 +148,6 @@ export default App;
 // run ID through API
 // save API (will be an oject) into ticket state
 // display info on screen
-
-
 
 // PSUEDOCODE
 
