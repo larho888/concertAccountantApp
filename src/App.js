@@ -22,14 +22,11 @@ function App() {
 
   const [track, setTracker] = useState(0);
 
-  const [size, setSize] = useState(0);
-
   const [show, setShow] = useState(false);
+
+  const [moreInfo, setMoreInfo] = useState(false);
   
   const key = `0TsZKUciU5HKm4ylnIBkwVoD8U4aPAgY`;
- 
-  
-
 
   const getAnswer = async () => {
     await axios({
@@ -50,9 +47,9 @@ function App() {
   });
 } 
 
-
-  useEffect(() => {
-    axios({
+  
+  const tester = async () => {
+    await axios({
       url: `https://app.ticketmaster.com/discovery/v2/events/${id}`,
       method: "GET",
       dataResponse: "json",
@@ -61,12 +58,23 @@ function App() {
         apikey: key,
       },
     }).then((response) => {
+      console.log(response.data.name)
       setTicket({
         name: response.data.name,
         id: response.data.id
       })
     })
-  }, [id]);
+  }  
+  
+
+  const getMoreInfo = () => {
+    return (
+      <div key={ticket.name}>
+        <p>{ticket.name}</p>
+      </div>
+    )
+
+  }
 
   const renderInfo = () => {
     return data.map((data) => {
@@ -76,6 +84,9 @@ function App() {
           <p>{data.id}</p>
           <button onClick={() => {
             setId(data.id)
+            tester();
+            setMoreInfo(true);
+            console.log(ticket)
             }}>More info</button>
           <AddShow ticket={ticket}/>
           </div>
@@ -86,42 +97,15 @@ function App() {
     <div className="App">
         <input value={keyWord} placeholder="insert keyword" type="text" onChange={(e) => {
           setKeyWord(e.target.value)
-          console.log(data);
         }} ></input>
         <button onClick={(e) => {
           e.preventDefault()
           setTracker(prevCount => prevCount +1);
           setShow(true);
           getAnswer();
-          console.log(keyWord)
-          console.log(data);
-          // setSize(10)
-          // {data.map((data) => {
-            // console.log(data.name)
-            // return (
-            //   <><p key={data.id}>{data.name}</p><p>{data.id}</p><button onClick={() => {
-            //     setId(data.id);
-            //   } }>More info</button><AddShow ticket={ticket} /></>
-            // )
-    
-              
-          
-        
-        // })}
         }}>search</button>
         {show ? renderInfo() : <React.Fragment />}
-          {/* {data.map((data) => {
-            return (
-              <>
-              <p key={data.id}>{data.name}</p>
-              <p>{data.id}</p>
-              <button onClick={() => {
-                setId(data.id)
-                }}>More info</button>
-              <AddShow ticket={ticket}/>
-              </>
-            )
-        })} */}
+        {moreInfo ? getMoreInfo() : <React.Fragment />}
     </div>
   );
 }
@@ -156,3 +140,23 @@ export default App;
 // Add a chart to show cost trends across multiple lists
 // Pagination for search results
 // Allow for the private list to be authenticated through google
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
