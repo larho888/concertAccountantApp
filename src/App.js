@@ -1,7 +1,8 @@
 import axios from "axios";
 import "./App.css";
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AddShow from "./Addshow";
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
 function App() {
 
@@ -23,13 +24,14 @@ function App() {
 
   const [size, setSize] = useState(0);
 
+  const [show, setShow] = useState(false);
+
+  const [moreInfo, setMoreInfo] = useState(false);
   
   const key = `0TsZKUciU5HKm4ylnIBkwVoD8U4aPAgY`;
- 
-  
 
-useEffect(() => {
-  axios({
+  const getAnswer = async () => {
+    await axios({
       url: `https://app.ticketmaster.com/discovery/v2/events`,
       method: "GET",
       dataResponse: "json",
@@ -37,7 +39,7 @@ useEffect(() => {
         format: "json",
         apikey: key,
         keyword: keyWord,
-        size: size
+        size: 10
       },
     }).then((response) => {
       const dataTest = response.data._embedded.events;
@@ -45,7 +47,7 @@ useEffect(() => {
   }).catch((error) => {
     alert(error.message)
   });
-  }, [track]);
+} 
 
   useEffect(() => {
     axios({
@@ -64,45 +66,71 @@ useEffect(() => {
     })
   }, [id]);
 
+  console.log(ticket);
+
+  const getMoreInfo = () => {
+    return (
+      <div key={ticket.id}>
+        <p>{ticket.id}</p>
+      </div>
+    )
+  }
+  
+  const renderInfo = () => {
+    return data.map((data) => {
+      return (
+        <div key={data.id}>
+          <p>{data.name}</p>
+          <p>{data.id}</p>
+
+
+          {  
+                 data.priceRanges === undefined
+              ? 
+                <div>
+                  <p>Price Range not available</p>
+                </div>
+              :
+              <div>
+                  <p>{data.priceRanges[0].currency}</p>
+                  <p>{Math.round(data.priceRanges[0].min)}</p>
+                  <p>{Math.round(data.priceRanges[0].max)}</p>
+                  <p>
+              {new Date(data.dates.start.dateTime).toLocaleTimeString("en-IN", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </p>
+                </div> 
+            }
+
+
+          {data.id === ticket.id && getMoreInfo()}
+          <button onClick={() => {
+            setId(data.id)
+            setMoreInfo(true);
+            }}>More info</button>
+          <AddShow ticket={ticket}/>
+          </div>
+      )
+  })}
+
   return (
     <div className="App">
-        <input placeholder="insert keyword" type="text" onChange={(e) => {
+        <input value={keyWord} placeholder="insert keyword" type="text" onChange={(e) => {
           setKeyWord(e.target.value)
         }} ></input>
         <button onClick={(e) => {
           e.preventDefault()
           setTracker(prevCount => prevCount +1);
-          setSize(10)
-          // {data.map((data) => {
-          //   console.log(data.name)
-          //   return (
-          //     <p>{data.name}</p>
-          //   )
-          //   // <><p key={data.id}>{data.name}</p><p>{data.id}</p><button onClick={() => {
-          //   //   setId(data.id);
-          //   // } }>More info</button><AddShow ticket={ticket} /></>
-              
-          
-        
-        // })}
+          setShow(true);
+          getAnswer();
         }}>search</button>
-         {data.map((data) => {
-            return (
-              <>
-              <p key={data.id}>{data.name}</p>
-              <p>{data.id}</p>
-              <button onClick={() => {
-                setId(data.id)
-                // moreInfo();
-                }}>More info</button>
-              <AddShow ticket={ticket}/>
-              </>
-            )
-        
-        })}
+        {show ? renderInfo() : <React.Fragment />}
     </div>
   );
 }
+// }
 
 export default App;
 
@@ -113,22 +141,49 @@ export default App;
 
 
 
-// PSUEDOCODE
+// PSUEDO Code
 
-//initialize firebase
-// Create state items to hold data from the API and user input X
-// Create a component to display the information X
-// Create a component to hold userinput using "getDatabase" method X
-// Create a function to make the API call with the correct search parameters X 
-// Userinput is linked to API call where user selects which items get added to the list X
-// This data is then sent to firebase X 
-// Display the list the user makes as a public list O
-// Complete published lists page broken down by price O 
-// Create a function to handle the remove, getDatabase and reference. getDatabase and reference would allow for the user to delete items from the list X firebase O display on page
-// Error handling where if the user enters an invalid concert/show an alert pops up and if the user enters a negative budget O 
+// Phase 1 (Need to figure out / Focus on Data structure sent to Firebase)
+    // User can enter a name for their own named list (sent to firebase as an empty object)
+    // User can add nested budget
+        // a Min budget value
+        // a Max budget value for their list (which will be added to firebase under their named object) 
+
+// Phase 2 
+    // User can search for a show X
+
+// Phase 3
+    // Search results displayed with relevant info X
+
+// Phase 4
+    // User can add shows to their list (functionality present)
+
+// Phase 5
+    // What user added to their list will be displayed (getDatabase method)
+    // Min / max values will be subtracted by their budget, difference shown
+    // when minimum budget is met an alert (NEED to figure out)
+
+// Phase 6
+    // User list will not be routed, but showed on same page
+    // User can remove shows from their list (getDatabase/ref/remove method)
+
+// Phase 7
+    // User's list can have the option / button to be published
+
+// Phase 8
+    // User's published list will be routed to a public published pages section
+    // lists broken down by price (ex. $100, $200)
+
+// Phase 9
+    // error handle for:
+        // if user search input is not an event
+        // if no price range is included
+        // if budget limit is reached
+        // if api is down 
+
 
 // STRETCH GOALS:
-// Profanity API to allow appropiate names for the list
+// Profanity API to allow appropriate names for the list
 // Sorting and filtering search results
 // Add a chart to show cost trends across multiple lists
 // Pagination for search results
