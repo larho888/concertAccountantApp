@@ -1,0 +1,30 @@
+// #region Variables
+// Color Variables
+$primary: #C0C8F0;
+$secondary: #97dae8;
+$tertiary:#dbf0ef;
+$fontColor:black;
+
+// Font Variables
+$font: 'Maitree', serif;
+$headings: 600;
+$bodyFont: normal;
+// #endregion Variables
+
+  //#region BASE STYLES
+.wrapper{
+  max-width: 1200px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+body{
+  background-color: $tertiary;
+  font-family:$font;
+  font-weight: $bodyFont;
+}
+
+h1, h2, h3{
+  font-weight: $headings;
+}
+    //#endregion BASE STYLES END
