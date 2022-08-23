@@ -29,9 +29,6 @@ const AddShow = (props) => {
             <div className="wrapper">
                 <button onClick={(e) => {
                 e.preventDefault();
-                // console.log(props.id)
-                // setUserInput(props.id)
-                // console.log(userInput)
                 handleSubmit();
                 }}>Save</button>
                 <button onClick={(e) => {
@@ -39,11 +36,6 @@ const AddShow = (props) => {
                 handleRemove();
                 }}
                 >remove</button>
-                {/* <form action="submit" className="addShowForm">
-                    <label htmlFor="showChosen">Add a to create your Workout</label>
-                    <input type="text" id="showChosen" onChange={handleInputChange} value={userInput}/>
-                    <button onClick={handleSubmit}>Choose a show</button>
-                </form> */}
             </div>
         </section>
     )

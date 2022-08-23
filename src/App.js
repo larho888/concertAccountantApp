@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import axios from "axios";
 import "./App.css";
 import React, { useEffect, useState } from 'react';
@@ -127,13 +128,27 @@ function App() {
           getAnswer();
         }}>search</button>
         {show ? renderInfo() : <React.Fragment />}
+=======
+import "./App.scss";
+import Header from "./components/Header";
+import SearchResults from "./components/SearchResults";
+
+function App() {
+  return(
+    <div>
+      <Header />
+      <SearchResults />
+>>>>>>> eliFeaturebranch
     </div>
-  );
+  )
+
 }
 // }
 
+
 export default App;
 
+<<<<<<< HEAD
 // onclick save data.id of event into ID state
 // run ID through API
 // save API (will be an oject) into ticket state
@@ -188,3 +203,5 @@ export default App;
 // Add a chart to show cost trends across multiple lists
 // Pagination for search results
 // Allow for the private list to be authenticated through google
+=======
+>>>>>>> eliFeaturebranch
