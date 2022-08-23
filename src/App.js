@@ -22,6 +22,8 @@ function App() {
 
   const [track, setTracker] = useState(0);
 
+  const [size, setSize] = useState(0);
+
   const [show, setShow] = useState(false);
 
   const [moreInfo, setMoreInfo] = useState(false);
@@ -47,9 +49,8 @@ function App() {
   });
 } 
 
-  
-  const tester = async () => {
-    await axios({
+  useEffect(() => {
+    axios({
       url: `https://app.ticketmaster.com/discovery/v2/events/${id}`,
       method: "GET",
       dataResponse: "json",
@@ -58,22 +59,25 @@ function App() {
         apikey: key,
       },
     }).then((response) => {
-      console.log(response.data.name)
       setTicket({
         name: response.data.name,
         id: response.data.id
       })
     })
-  }  
-  
+  }, [id]);
 
   const getMoreInfo = () => {
     return (
-      <div key={ticket.name}>
-        <p>{ticket.name}</p>
+      <div key={ticket.id}>
+        <p>{ticket.id}</p>
+         <p>
+              {new Date(data.dates.start.dateTime).toLocaleTimeString("en-IN", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </p>
       </div>
     )
-
   }
 
   const renderInfo = () => {
@@ -82,11 +86,25 @@ function App() {
         <div key={data.id}>
           <p>{data.name}</p>
           <p>{data.id}</p>
+          {
+             
+             data.priceRanges === undefined
+          ? 
+            <div>
+              <p>Price Range not available</p>
+            </div>
+          :
+          <div>
+              <p>{Math.round(data.priceRanges[0].currency)}</p>
+              <p>{Math.round(data.priceRanges[0].min)}</p>
+              <p>{Math.round(data.priceRanges[0].max)}</p>
+            </div> 
+            
+        }
+          {data.id === ticket.id && getMoreInfo()}
           <button onClick={() => {
             setId(data.id)
-            tester();
             setMoreInfo(true);
-            console.log(ticket)
             }}>More info</button>
           <AddShow ticket={ticket}/>
           </div>
@@ -105,7 +123,6 @@ function App() {
           getAnswer();
         }}>search</button>
         {show ? renderInfo() : <React.Fragment />}
-        {moreInfo ? getMoreInfo() : <React.Fragment />}
     </div>
   );
 }
@@ -140,23 +157,3 @@ export default App;
 // Add a chart to show cost trends across multiple lists
 // Pagination for search results
 // Allow for the private list to be authenticated through google
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
