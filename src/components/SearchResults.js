@@ -7,7 +7,14 @@ import { unstable_renderSubtreeIntoContainer } from "react-dom";
 const SearchResults = () => {
  const [ticket, setTicket] = useState({
     name: "",
-    id: ""
+    id: "",
+    max: "",
+    min: "",
+    venue: "",
+    time: "",
+    timezone: "",
+    address: "",
+    url: ""
   })
   const [data, setData] = useState([]);
 
@@ -20,6 +27,11 @@ const SearchResults = () => {
   const [show, setShow] = useState(false);
 
   const [moreInfo, setMoreInfo] = useState(false)
+
+  const [name, setName] = useState("");
+
+  const [budget, setBudget] = useState(0);
+
     //api key
   const key = `0TsZKUciU5HKm4ylnIBkwVoD8U4aPAgY`;
  
@@ -36,6 +48,7 @@ const SearchResults = () => {
         size: 10
       },
     }).then((response) => {
+      console.log(response)
       const dataTest = response.data._embedded.events;
       setData(dataTest);
     }).catch((error) => {
@@ -54,21 +67,91 @@ const SearchResults = () => {
         apikey: key,
       },
     }).then((response) => {
+      console.log(response.data);
+      // console.log(response.data.dates.start.dateTime)
       setTicket({
         name: response.data.name,
-        id: response.data.id
+        id: response.data.id,
+        time: (
+            id === ""
+              ?
+              'n/a'
+              :
+              (
+                new Date(response.data.dates.start.dateTime).toLocaleTimeString("en-IN", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+              )
+              ) 
+          
+          ,
+        timezone: (
+          id === ""
+          ? 
+          'n/a'
+          :
+          (response.data.dates.timezone)
+          ),
+        address: (
+          id === ""
+          ?
+          'n/a'
+          :
+          (response.data._embedded.venues[0].address.line1)
+          ),
+        url: (
+          id === ""
+          ?
+          'n/a'
+          :
+          (response.data._embedded.venues[0].url)
+          ),
+        max: (             
+               response.data.priceRanges === undefined
+            ? 
+             'n/a'
+            :
+                (response.data.priceRanges[0].max)
+        ),
+        min: (             
+               response.data.priceRanges === undefined
+            ? 
+             'n/a'
+            :
+                (response.data.priceRanges[0].min)
+        ),
+        venue: (
+          id === ""
+          ?
+          'n/a'
+          :
+          (response.data._embedded.venues[0].city.name)
+          )
       })
     })
   }, [id]);
-
-    //Named function to be called on an event that will display more information on out api call   
+  
+  //Named function to be called on an event that will display more information on out api call   
   const getMoreInfo = () => {
-      return(
-        <div>
-           <div key={ticket.name}>
-            <p>{ticket.name}</p>
+    return(
+      // <div>
+      <div key={ticket.name} className="borderStyle">
+            <p>{ticket.venue}</p>
+            <p>{ticket.address}</p>
+            <p>{ticket.timezone}</p>
+            <p>{ticket.time}</p>
+
+            {
+              ticket.url === undefined
+              ?
+              <p>link not available</p>
+              :
+              <a href={ticket.url} target="_blank" rel="noreferrer">Ticket</a>
+            }
+
           </div>
-        </div>
+        // </div>
       )
   }
 
@@ -81,44 +164,38 @@ const SearchResults = () => {
             <img src={data.images[0].url} alt={data.name}/>
             <p>{data.name}</p>
             <p>{data._embedded.venues[0].name}</p>
-            <p>{data._embedded.venues[0].city.name}</p>
-            <p>{data._embedded.venues[0].address.line1}</p>
-            <p>{data._embedded.venues[0].url}</p>
             <p>{data.dates.start.localDate}</p>
-             <p>
-              {new Date(data.dates.start.dateTime).toLocaleTimeString("en-IN", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </p>
-            <p>{data.dates.timezone}</p>
             {/* conditionally rendoring our call to the getmoreinfo function   */}
-            {data.id === ticket.id && getMoreInfo()}
 
             {/* error handle to due to some api calls not containing a price range object */}
             {             
                data.priceRanges === undefined
-            ? 
-              <div>
+               ? 
+               <div>
                 <p>Price Range not available</p>
               </div>
             :
-              <div>
+            <div>
                 <p>{data.priceRanges[0].currency}</p>
                 <p>{Math.round(data.priceRanges[0].min)}</p>
                 <p>{Math.round(data.priceRanges[0].max)}</p>
               </div> 
               
-          }        
+            }        
+            {data.id === ticket.id && getMoreInfo()}
           {/* event listener on our button to send the corresponding id stored in state as well as changing our moreInfo state to true */}
             <button onClick={() => {
               setMoreInfo(true);
               setId(data.id)
+              console.log(ticket.url)
+              // console.log(ticket.max)
+              // console.log(ticket.min)
+
               }}
               >More info
             </button>
             {/* passing our addshow component that will handle the removal of adding user selected show into firebase */}
-            <AddShow ticket={ticket}/>
+            <AddShow ticket={ticket} name={name} budget={budget}/>
           </div>
         </div>
       )
@@ -126,7 +203,9 @@ const SearchResults = () => {
 
     //returning our rendered info named component, calling our getanswer function with our stored promised axios call
   return (
-    <div className="App">
+    <div className="App wrapper">
+        <input placeholder="insert list name" type="text" onChange={(e) => { setName(e.target.value)}}></input>
+        <input placeholder="insert budget" type="number" onChange ={(e) => { setBudget(e.target.value)}}></input>
         <input value={keyWord} placeholder="Search for an Event" type="text" onChange={(e) => {
           setKeyWord(e.target.value)
         }} ></input>
