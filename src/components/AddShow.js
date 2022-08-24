@@ -12,10 +12,10 @@ const AddShow = (props) => {
     }
 
     const myList = () => {
-
         // Create a new post reference with an auto-generated id
         const db = getDatabase();
         const postListRef = ref(db, props.name);
+        // console.log(postListRef._path.pieces_[0])
         const newPostRef = push(postListRef);
         set(newPostRef, {
             name: props.ticket.name,
@@ -25,12 +25,12 @@ const AddShow = (props) => {
         });
     }
 
-    const handleSubmit = () => {
-        const database = getDatabase(firebase);
-        const dbRef = ref(database);
-        push(dbRef, props.ticket);
-        // setUserInput("");
-    }
+    // const handleSubmit = () => {
+    //     const database = getDatabase(firebase);
+    //     const dbRef = ref(database);
+    //     push(dbRef, props.ticket);
+    //     // setUserInput("");
+    // }
 
     const handleRemove = () => {
         const database = getDatabase(firebase)
@@ -43,7 +43,7 @@ const AddShow = (props) => {
             <div className="wrapper">
                 <button onClick={(e) => {
                 e.preventDefault();
-                handleSubmit();
+                // handleSubmit();
                 myList();
                 }}>Save</button>
                 <button onClick={(e) => {

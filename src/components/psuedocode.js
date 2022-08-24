@@ -1,6 +1,8 @@
 // PSUEDO Code
 
-// Phase 1 (Need to figure out / Focus on Data structure sent to Firebase)
+// Phase 1 
+ // user list can't be duplicated 
+        // User authentication involved where user's list will be edited.
     // User can enter a name for their own named list (sent to firebase as an empty object)
     // User can add nested budget
         // a Min budget value

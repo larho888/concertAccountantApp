@@ -48,7 +48,7 @@ const SearchResults = () => {
         size: 10
       },
     }).then((response) => {
-      console.log(response)
+    //   console.log(response)
       const dataTest = response.data._embedded.events;
       setData(dataTest);
     }).catch((error) => {
@@ -67,7 +67,7 @@ const SearchResults = () => {
         apikey: key,
       },
     }).then((response) => {
-      console.log(response.data);
+    //   console.log(response.data);
       // console.log(response.data.dates.start.dateTime)
       setTicket({
         name: response.data.name,
@@ -187,7 +187,7 @@ const SearchResults = () => {
             <button onClick={() => {
               setMoreInfo(true);
               setId(data.id)
-              console.log(ticket.url)
+            //   console.log(ticket.url)
               // console.log(ticket.max)
               // console.log(ticket.min)
 

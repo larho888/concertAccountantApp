@@ -9,8 +9,6 @@ function App() {
       <SearchResults />
     </div>
   )
-
 }
-
 
 export default App;
