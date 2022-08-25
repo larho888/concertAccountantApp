@@ -10,7 +10,6 @@ const SearchResults = () => {
     id: "",
     max: "",
     min: "",
-    venue: "",
     time: "",
     timezone: "",
     address: "",
@@ -67,91 +66,78 @@ const SearchResults = () => {
         apikey: key,
       },
     }).then((response) => {
-    //   console.log(response.data);
-      // console.log(response.data.dates.start.dateTime)
-      setTicket({
-        name: response.data.name,
-        id: response.data.id,
-        time: (
-            id === ""
-              ?
-              'n/a'
-              :
-              (
-                new Date(response.data.dates.start.dateTime).toLocaleTimeString("en-IN", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })
-              )
-              ) 
-          
-          ,
-        timezone: (
-          id === ""
-          ? 
-          'n/a'
-          :
-          (response.data.dates.timezone)
-          ),
-        address: (
-          id === ""
-          ?
-          'n/a'
-          :
-          (response.data._embedded.venues[0].address.line1)
-          ),
-        url: (
-          id === ""
-          ?
-          'n/a'
-          :
-          (response.data._embedded.venues[0].url)
-          ),
-        max: (             
-               response.data.priceRanges === undefined
-            ? 
-             'n/a'
-            :
-                (response.data.priceRanges[0].max)
-        ),
-        min: (             
-               response.data.priceRanges === undefined
-            ? 
-             'n/a'
-            :
-                (response.data.priceRanges[0].min)
-        ),
-        venue: (
-          id === ""
-          ?
-          'n/a'
-          :
-          (response.data._embedded.venues[0].city.name)
-          )
-      })
+        setTicket({
+            name: response.data.name,
+            id: response.data.id,
+            time: (
+                    id === ""
+                    ?
+                    'n/a'
+                    :
+                    (
+                        new Date(response.data.dates.start.dateTime).toLocaleTimeString("en-IN", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        })
+                    )
+                ),
+            timezone: (
+                    id === ""
+                    ? 
+                    'n/a'
+                    :
+                    (response.data.dates.timezone)
+                ),
+            address: (
+                    id === ""
+                    ?
+                    'n/a'
+                    :
+                    (response.data._embedded.venues[0].address.line1)
+                ),
+            url: (
+                    id === ""
+                    ?
+                    'n/a'
+                    :
+                    (response.data._embedded.venues[0].url)
+                ),
+            max: (             
+                    response.data.priceRanges === undefined
+                    ? 
+                    'n/a'
+                    :
+                    (response.data.priceRanges[0].max)
+                ),
+            min: (             
+                    response.data.priceRanges === undefined
+                    ? 
+                    'n/a'
+                    :
+                    (response.data.priceRanges[0].min)
+                )
+        })
     })
   }, [id]);
   
   //Named function to be called on an event that will display more information on out api call   
   const getMoreInfo = () => {
     return(
-      // <div>
-      <div key={ticket.name} className="borderStyle">
-            <p>{ticket.venue}</p>
-            <p>{ticket.address}</p>
-            <p>{ticket.timezone}</p>
-            <p>{ticket.time}</p>
+        <ul className="subMenu" key={ticket.name}>
 
+            <li><p>{ticket.address}</p></li>
+            <li><p>{ticket.timezone}</p></li>
+            <li><p>{ticket.time}</p></li>
             {
-              ticket.url === undefined
-              ?
-              <p>link not available</p>
-              :
-              <a href={ticket.url} target="_blank" rel="noreferrer">Ticket</a>
+                ticket.url === undefined
+                ?
+                <li><p>link not available</p></li>
+                :
+                <li><a href={ticket.url} target="_blank" rel="noreferrer">Ticket</a></li>
             }
-
-          </div>
-        // </div>
+            
+        </ul>
+        
       )
   }
 
@@ -159,63 +145,86 @@ const SearchResults = () => {
   const renderInfo = () => {
     return data.map((data) => {
       return (
-        <div key={data.id}>
-          <div>
-            <img src={data.images[0].url} alt={data.name}/>
-            <p>{data.name}</p>
-            <p>{data._embedded.venues[0].name}</p>
-            <p>{data.dates.start.localDate}</p>
-            {/* conditionally rendoring our call to the getmoreinfo function   */}
+        <section>
+            <div className="wrapper">
+                <ul key={data.id} className="mainMenu">
+                    <li className="container">
+                        <div className="box1">
+                            <div className="box2">
+                                <img src={data.images[0].url} alt={data.name}/>
+                        
+                                <h3>{data.name}</h3>
+                            </div>
 
-            {/* error handle to due to some api calls not containing a price range object */}
-            {             
-               data.priceRanges === undefined
-               ? 
-               <div>
-                <p>Price Range not available</p>
-              </div>
-            :
-            <div>
-                <p>{data.priceRanges[0].currency}</p>
-                <p>{Math.round(data.priceRanges[0].min)}</p>
-                <p>{Math.round(data.priceRanges[0].max)}</p>
-              </div> 
-              
-            }        
-            {data.id === ticket.id && getMoreInfo()}
-          {/* event listener on our button to send the corresponding id stored in state as well as changing our moreInfo state to true */}
-            <button onClick={() => {
-              setMoreInfo(true);
-              setId(data.id)
-            //   console.log(ticket.url)
-              // console.log(ticket.max)
-              // console.log(ticket.min)
+                            <div className="box3">
+                                <h3>Date</h3>
+                                <p>{data.dates.start.localDate}</p>
 
-              }}
-              >More info
-            </button>
-            {/* passing our addshow component that will handle the removal of adding user selected show into firebase */}
-            <AddShow ticket={ticket} name={name} budget={budget}/>
-          </div>
-        </div>
+                                <h3 className="venueCity">Venue</h3>
+                                <p>{data._embedded.venues[0].city.name}</p>
+                                <p>{data._embedded.venues[0].name}</p>
+                            </div>
+                        </div>
+
+                        {/* conditionally rendoring our call to the getmoreinfo function   */}
+
+                        {/* error handle to due to some api calls not containing a price range object */}
+                        <div className="box4">
+                            <h3>Ticket Costs</h3>
+                            {             
+                            data.priceRanges === undefined
+                            ? 
+                            <div>
+                                <p>Price Range not available</p>
+                            </div>
+                            :
+                            <div>
+                                <p>Currency: {data.priceRanges[0].currency}</p>
+                                <p>Minimum: ${Math.round(data.priceRanges[0].min)}</p>
+                                <p>Maximum: ${Math.round(data.priceRanges[0].max)}</p>
+                            </div> 
+                            
+                            }        
+                        </div>
+                        <div className="box5">
+
+                            {data.id === ticket.id && getMoreInfo()}
+                            {/* event listener on our button to send the corresponding id stored in state as well as changing our moreInfo state to true */}
+                            <button onClick={(e) => {
+                            e.preventDefault();    
+                            setMoreInfo(true);
+                            setId(data.id)
+                            console.log(ticket.url)
+                            }}
+                            >More info
+                            </button>
+                            {/* passing our addshow component that will handle the removal of adding user selected show into firebase */}
+                            <AddShow ticket={ticket} name={name} budget={budget}/>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
       )
   })}
 
     //returning our rendered info named component, calling our getanswer function with our stored promised axios call
   return (
     <div className="App wrapper">
-        <input placeholder="insert list name" type="text" onChange={(e) => { setName(e.target.value)}}></input>
-        <input placeholder="insert budget" type="number" onChange ={(e) => { setBudget(e.target.value)}}></input>
-        <input value={keyWord} placeholder="Search for an Event" type="text" onChange={(e) => {
-          setKeyWord(e.target.value)
-        }} ></input>
-        <button onClick={(e) => {
-          e.preventDefault()
-          setTracker(prevCount => prevCount +1);
-          setShow(true);
-          getAnswer();
-        }}>search</button>
-        {show ? renderInfo() : <React.Fragment />}
+        <form>
+            <input placeholder="insert list name" type="text" onChange={(e) => { setName(e.target.value)}}></input>
+            <input placeholder="insert budget" type="number" onChange ={(e) => { setBudget(e.target.value)}}></input>
+            <input value={keyWord} placeholder="Search for an Event" type="text" onChange={(e) => {
+                setKeyWord(e.target.value)
+            }} ></input>
+            <button onClick={(e) => {
+                e.preventDefault()
+                setTracker(prevCount => prevCount +1);
+                setShow(true);
+                getAnswer();
+            }}>search</button>
+            {show ? renderInfo() : <React.Fragment />}
+        </form>
     </div>
   );
 }
