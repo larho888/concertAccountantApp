@@ -12,7 +12,7 @@ function App() {
     priceRanges: [],
   })
 
-  //hello
+  //hello hey
   const [data, setData] = useState([]);
 
   //userinput for keyword
