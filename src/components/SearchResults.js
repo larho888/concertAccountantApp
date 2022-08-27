@@ -53,6 +53,7 @@ const SearchResults = (props) => {
     }).then((response) => {
       const dataTest = response.data._embedded.events;
       setData(dataTest);
+      console.log(data)
     }).catch((error) => {
       alert(error.message)
     });

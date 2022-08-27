@@ -9,18 +9,21 @@ const AddShow = (props) => {
     setUserInput(e.target.value);
   };
 
-  const moreUserSettings = {
+  const moreUserSettings =   
+  {
     name: props.ticket.name,
-    budget: props.budget,
     min: props.ticket.max,
-    max: props.ticket.min,
-    }
+    max: props.ticket.min
+  }
+
+
+  console.log(moreUserSettings)
 
 
   const myList = () => {
     // Create a new post reference with an auto-generated id
     const db = getDatabase();
-    const postListRef = ref(db, `/${props.currentUser}/${props.budget}/${props.name}`);
+    const postListRef = ref(db, `/${props.currentUser}/${props.name}/${props.budget}`);
     const newPostRef = push(postListRef);
     update(newPostRef, moreUserSettings)
   };
