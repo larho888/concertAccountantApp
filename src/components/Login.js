@@ -36,9 +36,14 @@ function Login () {
     }
 
     return (
+<<<<<<< HEAD
         <>
         <div className="login wrapper">
             <div className="register">
+=======
+        <><div className="login">
+            <div>
+>>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
                 <h3>Register</h3>
                 <input placeholder="email" onChange={(e) => {
                     setRegisterEmail(e.target.value);
@@ -67,8 +72,12 @@ function Login () {
                 {user?.email}
                 <button onClick={logout}>logout</button>
             </div>
+<<<<<<< HEAD
         </div><SearchResults user={user} />
         </>
+=======
+        </div><SearchResults user={user} /></>
+>>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
     )
 }
 

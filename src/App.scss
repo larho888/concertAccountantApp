@@ -57,12 +57,15 @@ h3{
   margin: 0;
   padding: 0;
 }
+<<<<<<< HEAD
 
 input {
   width: 100%;
   max-width: 50%;
   margin: 0 auto;
 }
+=======
+>>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
     //#endregion BASE STYLES END
 
 
@@ -71,6 +74,7 @@ input {
 //#endregion TYPOGRAPHY STYLES
 
 //#region HEADER STYLES
+<<<<<<< HEAD
 header {
   margin-top: 5%;
   line-height: 1.8;
@@ -90,6 +94,11 @@ header {
     }
   }
 }
+=======
+//#endregion HEADER STYLES
+
+//#region INPUT STYLES
+>>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
 //#endregion INPUT STYLES
 
 //#region SEARCH RESULTS SECTION STYLES
@@ -146,6 +155,7 @@ header {
   }
 }
 
+<<<<<<< HEAD
 .moreInfoDiv {
   border: 2px solid black;
 }
@@ -154,6 +164,8 @@ header {
   display: none;
 }
 
+=======
+>>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
 // .box5{
 //   border: 1px solid black;
 // }
