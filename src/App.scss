@@ -57,6 +57,12 @@ h3{
   margin: 0;
   padding: 0;
 }
+
+input {
+  width: 100%;
+  max-width: 50%;
+  margin: 0 auto;
+}
     //#endregion BASE STYLES END
 
 
@@ -65,9 +71,25 @@ h3{
 //#endregion TYPOGRAPHY STYLES
 
 //#region HEADER STYLES
+header {
+  margin-top: 5%;
+  line-height: 1.8;
+}
 //#endregion HEADER STYLES
 
 //#region INPUT STYLES
+.login {
+  text-align: center;
+  .register {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10%;
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+}
 //#endregion INPUT STYLES
 
 //#region SEARCH RESULTS SECTION STYLES
@@ -122,6 +144,14 @@ h3{
   h3{
     margin-bottom: 25px;
   }
+}
+
+.moreInfoDiv {
+  border: 2px solid black;
+}
+
+.hideInfoDiv {
+  display: none;
 }
 
 // .box5{
