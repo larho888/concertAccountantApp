@@ -4,7 +4,7 @@ import {firebase} from './Firebase';
 import Userlist from './Userlist';
 import { confirmPasswordReset } from 'firebase/auth';
 
-const GetList = (props) => {
+const GetPrivateList = (props) => {
     const [createdList, setCreatedList] = useState([]);
 
     const [word, setWord] = useState("");
@@ -78,4 +78,4 @@ const GetList = (props) => {
     )
 }
 
-export default GetList;
+export default GetPrivateList;
