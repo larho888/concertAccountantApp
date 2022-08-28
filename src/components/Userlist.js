@@ -43,11 +43,3 @@ return (
 }
 
 export default Userlist;
-
-// //  return (
-//     <li>
-//     {e.budgetName}
-//      <Userlist e={e} /> 
-// </li>
-
-// )

@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword} from "firebase/auth";
 import {auth} from './Firebase';
 import SearchResults from "./SearchResults";
+import GetPrivateList from "./GetPrivateList";
+import GetList from "./GetList";
 
 function Login () {
     
@@ -15,7 +17,9 @@ function Login () {
     useEffect (() => { onAuthStateChanged(auth, (currentUser) => {
         setUser(currentUser);
     })
-}, []);
+    }, [user]);
+
+    console.log(user.uid);
 
     const register = async () => {
         try {
@@ -66,7 +70,11 @@ function Login () {
                 {user?.email}
                 <button onClick={logout}>logout</button>
             </div>
-        </div><SearchResults user={user} /></>
+        </div><SearchResults user={user} />
+        <GetList />
+        <GetPrivateList user={user} />
+        </>
+
     )
 }
 
