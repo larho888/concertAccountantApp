@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import EventDetails from "./EventDetails";
 
 function Userlist ({e}) {
 
@@ -14,14 +15,39 @@ useEffect(() => {
             const newObject = {}
             newObject.totalBudget = key;
             newObject.concerts = e[key];
+            newObject.budgetName = newObject.concerts[0];
             newArray.push(newObject);
         }
     }
     setBudgetCosts(newArray);
 }, [])
 
-console.log(budgetCosts);
+return (
+    <div>
+        {budgetCosts.map((e) => { 
+                return (
+                    
+                    <><h3>{e.budgetName}</h3>
+                    <h4>{e.totalBudget}</h4>
+                    <EventDetails e={e} /></>
+                    
+                )
+            })}
+
+    </div>
+              
+
+)
+
    
 }
 
 export default Userlist;
+
+// //  return (
+//     <li>
+//     {e.budgetName}
+//      <Userlist e={e} /> 
+// </li>
+
+// )

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getDatabase, ref, onValue, remove } from 'firebase/database';
 import {firebase} from './Firebase';
 import Userlist from './Userlist';
+import { confirmPasswordReset } from 'firebase/auth';
 
 const GetList = () => {
     const [createdList, setCreatedList] = useState([]);
@@ -27,6 +28,7 @@ const GetList = () => {
                     for (let budgetCost in budgetObject) {
                         newObject[budgetCost] = []
                         const arrayOfConcerts = newObject[budgetCost] 
+                        arrayOfConcerts.push(budgetName)
                         const listId = budgetObject[budgetCost]
                         for (let id in listId) {
                             const listDetails = listId[id];
@@ -51,58 +53,24 @@ const GetList = () => {
         })
     }, [])
 
-    // console.log(createdList)
+   
 
     return (
         <div>
-            <ul>
                 {createdList.map((e) => { 
                     return (
-                        <Userlist e={e} /> 
-                    )
-                    
-                    
+                        <div>
+                            <ul>
+                                <li><Userlist e={e} /> </li>
+                            <li>
+                            
+                        </li>
+                        </ul>
+                        </div>
+                        )
                 })}
-            </ul>
         </div>
     )
-
-    // return(
-    //     <div>
-    //         <ul>
-    //             {createdList.map((eventList) => {
-    //                 const name = (Object.keys(eventList.value))
-    //                 name.map((event) => {
-    //                     const something = (eventList.value[event])
-    //                     const see = (Object.keys(something))
-    //                     see.map((e)=> {                            
-    //                         return(
-    //                             <p>(e)</p>
-    //                         )
-    //                     })
-    //                 })
-    //                 return(
-    //                     <li key={eventList.key}>
-    //                         <p>{name}</p>
-                       
-                            
-    //                     </li>
-                    
-    //                 )
-    //             })}
-    //              {/* {word.map((event) => {
-    //                     const something = (createdList.value[event])
-    //                     const see = (Object.keys(something))
-    //                     see.map((e)=> {
-                            
-    //                         return(
-    //                             <p>(e)</p>
-    //                         )
-    //                     })
-    //                 })} */}
-    //         </ul>
-    //     </div>
-    // )
 }
 
 export default GetList;
