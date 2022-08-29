@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword} from "firebase/auth";
 import {auth} from './Firebase';
 import SearchResults from "./SearchResults";
+import GetPrivateList from "./GetPrivateList";
+import GetList from "./GetList";
 
 function Login () {
     
@@ -12,10 +14,14 @@ function Login () {
 
     const [user, setUser] = useState({});
 
+    const [ modal, setModal ] = useState(false);
+
     useEffect (() => { onAuthStateChanged(auth, (currentUser) => {
         setUser(currentUser);
     })
-}, []);
+}, [user]);
+
+// console.log(user.uid);
 
     const register = async () => {
         try {
@@ -35,49 +41,99 @@ function Login () {
         await signOut(auth);
     }
 
+    const toggleModal = () => {
+        setModal(!modal);
+    }
+
+    if(modal) {
+        document.body.classList.add('active-modal');
+    } else {
+        document.body.classList.remove('active-modal');
+    }
+
     return (
-<<<<<<< HEAD
         <>
-        <div className="login wrapper">
-            <div className="register">
-=======
-        <><div className="login">
-            <div>
->>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
-                <h3>Register</h3>
-                <input placeholder="email" onChange={(e) => {
-                    setRegisterEmail(e.target.value);
-                } }></input>
-                <input placeholder="password" onChange={(e) => {
-                    setRegisterPassword(e.target.value);
-                } }></input>
+            <div className="authorization wrapper">
+                <div className="login">
+                    <h3>Login</h3>
+                    <input placeholder="email" onChange={(e) => {
+                        loginRegisterEmail(e.target.value);
+                    } }></input>
+                    <input placeholder="password" onChange={(e) => {
+                        loginRegisterPassword(e.target.value);
+                    } }></input>
 
-                <button onClick={register}>create user</button>
+                    <button 
+                    onClick={login}
+                    disabled={!(loginEmail  && loginPassword)}
+                    >Log In
+                    </button>
+
+                    <div>
+                        <h3>User logged in</h3>
+                        {user?.email}
+                        <button onClick={logout}>logout</button>
+                    </div>
+
+                    <p>
+                        Don't have an account? 
+                        <button 
+                        onClick={toggleModal}
+                        className="signUpBtn"> 
+                        Sign Up
+                            {/* <a href=""> Sign Up</a> */}
+                        </button>
+                    </p>
+                </div>
+
+                {
+                    modal && (
+                        <div className="signUpModal">
+                            <div 
+                            className="overlay"
+                            // onClick={toggleModal}
+                            >
+                            {/* </div> */}
+                                <div className="register">
+                                    <h3>Register</h3>
+                                    <input placeholder="email" onChange={(e) => {
+                                        setRegisterEmail(e.target.value);
+                                    } }>
+                                    </input>
+                                    <input placeholder="password" onChange={(e) => {
+                                        setRegisterPassword(e.target.value);
+                                    } }>
+                                    </input>
+                                    <button 
+                                    onClick={register}
+                                    disabled={!(registerEmail  && registerPassword)}
+                                    // onClick={toggleModal}
+                                    className="signUpBtn"> 
+                                    Sign Up
+                                    </button>
+                                    <button
+                                    className="closeSignUp"
+                                    onClick={toggleModal}>
+                                        X
+                                    </button>
+
+                                    {/* <button 
+                                    onClick={register}
+                                    >
+                                        Create User
+                                    </button> */}
+                                </div>
+
+                            </div>
+                        </div>
+                    )
+                }
+            
             </div>
-
-            <div>
-                <h3>Login</h3>
-                <input placeholder="email" onChange={(e) => {
-                    loginRegisterEmail(e.target.value);
-                } }></input>
-                <input placeholder="password" onChange={(e) => {
-                    loginRegisterPassword(e.target.value);
-                } }></input>
-
-                <button onClick={login}>login</button>
-            </div>
-
-            <div>
-                <h3>User logged in</h3>
-                {user?.email}
-                <button onClick={logout}>logout</button>
-            </div>
-<<<<<<< HEAD
-        </div><SearchResults user={user} />
+            <SearchResults user={user} />
+            <GetList />
+            <GetPrivateList user={user} />
         </>
-=======
-        </div><SearchResults user={user} /></>
->>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
     )
 }
 

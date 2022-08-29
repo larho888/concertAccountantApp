@@ -4,10 +4,10 @@ import {firebase} from './Firebase';
 import Userlist from './Userlist';
 import { confirmPasswordReset } from 'firebase/auth';
 
-const GetList = () => {
+const GetPrivateList = (props) => {
     const [createdList, setCreatedList] = useState([]);
 
-    const {word, setWord} = useState([]);
+    const [word, setWord] = useState("");
 
     useEffect(() => {
         const db = getDatabase(firebase);
@@ -22,7 +22,7 @@ const GetList = () => {
                 // console.log(data[key])
                 const budgetNames = data[key];
                 // console.log(subData)
-                for (let budgetName in budgetNames) {
+                if (key === `${props.user.uid}`) { for (let budgetName in budgetNames) {
                     const newObject = {budgetName:budgetName};
                     const budgetObject = budgetNames[budgetName];
                     for (let budgetCost in budgetObject) {
@@ -41,7 +41,7 @@ const GetList = () => {
                         } 
                     }
                     newArray.push(newObject)
-                }
+                }}
             }
 
             // console.log(newArray)
@@ -51,26 +51,31 @@ const GetList = () => {
             // }
             setCreatedList(newArray);
         })
-    }, [])
+    }, [word])
 
    
 
     return (
-        <div>
-                {createdList.map((e) => { 
+        <><div>
+        <button onClick={(e) => {
+    e.preventDefault();    
+    setWord(props.user.uid);
+    }}>set</button>
+        </div><div>
+                {createdList.map((e) => {
                     return (
                         <div>
                             <ul>
                                 <li><Userlist e={e} /> </li>
-                            <li>
-                            
-                        </li>
-                        </ul>
+                                <li>
+
+                                </li>
+                            </ul>
                         </div>
-                        )
+                    );
                 })}
-        </div>
+            </div></>
     )
 }
 
-export default GetList;
+export default GetPrivateList;

@@ -57,24 +57,28 @@ h3{
   margin: 0;
   padding: 0;
 }
-<<<<<<< HEAD
 
-input {
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* input,
+ {
   width: 100%;
   max-width: 50%;
   margin: 0 auto;
-}
-=======
->>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
+} */
     //#endregion BASE STYLES END
-
 
 
 //#region TYPOGRAPHY STYLES
 //#endregion TYPOGRAPHY STYLES
 
 //#region HEADER STYLES
-<<<<<<< HEAD
 header {
   margin-top: 5%;
   line-height: 1.8;
@@ -82,23 +86,108 @@ header {
 //#endregion HEADER STYLES
 
 //#region INPUT STYLES
-.login {
+.authorization {
   text-align: center;
-  .register {
+  .login {
+    margin-top: 5%;
+    >input,
+      button {
+        margin-bottom: 1rem;
+        padding: 10px;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 50%;
+        margin: 0 auto 1rem;
+      }
+  }
+  .register,
+  .login {
     display: flex;
     flex-direction: column;
-    margin-top: 10%;
     h3 {
       font-size: 1.5rem;
       margin-bottom: 1.5rem;
     }
+    /* > input,
+    button {
+      margin-bottom: 1rem;
+      padding: 10px;
+      font-size: 1rem;
+      width: 100%;
+      max-width: 50%;
+      margin: 0 auto 1rem;
+    } */
+    /* .signUpModal {
+      display: flex;
+      justify-content: center;
+    } */
+    .signUpBtn {
+      max-width: fit-content;
+      padding: 5px 10px;
+      background-color: white;
+      // border: 1px solid $secondary;
+      border-radius: 5px;
+      margin-left: 5px;
+    }
   }
+  .signUpModal,
+  .overlay {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+      a {
+        color: $fontColor;
+      }
+    }
+    .overlay {
+      background: rgba(49, 49, 49, 0.8);
+      display: flex;
+      justify-content: center;
+      .register {
+        position: absolute;
+        top: 30%;
+        // left: 30%;
+        margin: 0 auto;
+        background-color: $tertiary;
+        padding: 2rem;
+        border-radius: 5px;
+        width: 90%;
+        max-width: 600px;
+        min-width: 300px;
+        // z-index: 5;
+        >input,
+          button {
+            margin-bottom: 1rem;
+            padding: 10px;
+            font-size: 1rem;
+            width: 100%;
+            // max-width: 0%;
+            margin: 0 auto 1rem;
+          }
+        .signUpBtn {
+          max-width: 50%;
+          margin: 0 auto;
+        }
+        .closeSignUp {
+          max-width: fit-content;
+          padding: 5px 10px;
+          position: absolute;
+          right: 2rem;
+        }
+      }
+    }
 }
-=======
+
+body.active-modal {
+  overflow-y: hidden;
+}
 //#endregion HEADER STYLES
 
 //#region INPUT STYLES
->>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
 //#endregion INPUT STYLES
 
 //#region SEARCH RESULTS SECTION STYLES
@@ -155,17 +244,15 @@ header {
   }
 }
 
-<<<<<<< HEAD
 .moreInfoDiv {
-  border: 2px solid black;
+  border: 1px solid black;
+  border-top: none;
 }
 
 .hideInfoDiv {
   display: none;
 }
 
-=======
->>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
 // .box5{
 //   border: 1px solid black;
 // }
@@ -179,3 +266,18 @@ header {
 
 
 //#endregion SEARCH RESULTS SECTION STYLES
+
+//#region media queries
+@media (max-width: 450px) {
+  .authorization {
+    .register,
+    .login {
+      > input,
+        button {
+          width: 100%;
+          max-width: 100%;
+        }
+    }
+  }
+}
+//#endregion media queries

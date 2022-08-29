@@ -1,21 +1,11 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
 // import "./App.scss";
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
 import AddShow from "./AddShow";
-<<<<<<< HEAD
 import { unstable_renderSubtreeIntoContainer } from "react-dom";
-
-const SearchResults = () => {
-=======
 import Login from "./Login";
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
 const SearchResults = (props) => {
->>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
  const [ticket, setTicket] = useState({
     name: "",
     id: "",
@@ -26,10 +16,7 @@ const SearchResults = (props) => {
     address: "",
     url: ""
   })
-<<<<<<< HEAD
-=======
-  
->>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
+
   const [data, setData] = useState([]);
 
   const [keyWord, setKeyWord] = useState('');
@@ -40,20 +27,13 @@ const SearchResults = (props) => {
 
   const [show, setShow] = useState(false);
 
-<<<<<<< HEAD
   const [moreInfo, setMoreInfo] = useState(false);
-=======
-  const [moreInfo, setMoreInfo] = useState(false)
->>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
 
   const [name, setName] = useState("");
 
   const [budget, setBudget] = useState(0);
-<<<<<<< HEAD
-=======
   
   const [currentUser, setCurrentUser] = useState("");
->>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
 
     //api key
   const key = `0TsZKUciU5HKm4ylnIBkwVoD8U4aPAgY`;
@@ -71,15 +51,9 @@ const SearchResults = (props) => {
         size: 10
       },
     }).then((response) => {
-<<<<<<< HEAD
-    //   console.log(response)
-      const dataTest = response.data._embedded.events;
-      setData(dataTest);
-=======
       const dataTest = response.data._embedded.events;
       setData(dataTest);
       console.log(data)
->>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
     }).catch((error) => {
       alert(error.message)
     });
@@ -165,9 +139,13 @@ const SearchResults = (props) => {
                 :
                 <li><a href={ticket.url} target="_blank" rel="noreferrer">Ticket</a></li>
             }
-            
+            <AddShow 
+              ticket={ticket} 
+              name={name} 
+              budget={budget}
+              currentUser={currentUser}
+              />
         </ul>
-        
       )
   }
 
@@ -218,53 +196,28 @@ const SearchResults = (props) => {
                         </div>
                         <div className="box5">
 
-<<<<<<< HEAD
-                            {/* event listener on our button to send the corresponding id stored in state as well as changing our moreInfo state to true */}
-                            <button onClick={(e) => {
-                              e.preventDefault();    
-                              setMoreInfo(!moreInfo);
-                              setId(data.id);
-                              console.log(ticket.url)
-=======
-                            {data.id === ticket.id && getMoreInfo()}
                             {/* event listener on our button to send the corresponding id stored in state as well as changing our moreInfo state to true */}
                             <button onClick={(e) => {
                             e.preventDefault();    
-                            setMoreInfo(true);
+                            setMoreInfo(!moreInfo);
                             setId(data.id)
->>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
                             }}
                             >More info
-                            </button>
-                            {/* passing our addshow component that will handle the removal of adding user selected show into firebase */}
-<<<<<<< HEAD
-                            <AddShow ticket={ticket} name={name} budget={budget}/>
+                            </button>                           
                         </div>
                     </li>
                     <div className="moreInfoDiv ">
                       {data.id === ticket.id && moreInfo ? getMoreInfo() : null}
                     </div>
-=======
-                            <AddShow ticket={ticket} name={name} budget={budget} currentUser={currentUser}/>
-                        </div>
-                    </li>
->>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
                 </ul>
             </div>
         </section>
       )
   })}
 
-<<<<<<< HEAD
-
-    //returning our rendered info named component, calling our getanswer function with our stored promised axios call
-  return (
-    <div className="App wrapper">
-=======
     //returning our rendered info named component, calling our getanswer function with our stored promised axios call
   return (
     <div className="App wrapper" key={data.id}>
->>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
         <form>
             <input placeholder="insert list name" type="text" onChange={(e) => { setName(e.target.value)}}></input>
             <input placeholder="insert budget" type="number" onChange ={(e) => { setBudget(e.target.value)}}></input>
@@ -276,10 +229,7 @@ const SearchResults = (props) => {
                 setTracker(prevCount => prevCount +1);
                 setShow(true);
                 getAnswer();
-<<<<<<< HEAD
-=======
                 setCurrentUser(props.user.reloadUserInfo.localId)
->>>>>>> 60440b669de7b750f74c071c062f08bb95e354c0
             }}>search</button>
             {show ? renderInfo() : <React.Fragment />}
         </form>
