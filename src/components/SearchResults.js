@@ -31,7 +31,7 @@ const SearchResults = (props) => {
 
   const [name, setName] = useState("");
 
-  const [budget, setBudget] = useState(0);
+  const [budget, setBudget] = useState("0");
   
   const [currentUser, setCurrentUser] = useState("");
 
@@ -222,7 +222,14 @@ const SearchResults = (props) => {
             <button onClick={(e) => {
                 e.preventDefault()
                 setTracker(prevCount => prevCount +1);
-                setShow(true);
+                console.log(name , budget)
+                {             
+                  name === "" || budget === "0" || budget === "" || props.user === null
+               ? 
+                  alert('Please fill out all')
+               :
+                  setShow(true);
+                }    
                 getAnswer();
                 setCurrentUser(props.user.reloadUserInfo.localId)
             }}>search</button>

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import EventDetails from "./EventDetails";
+import { getDatabase, push, ref, remove, set, update } from "firebase/database";
+import Login from "./Login";
 
-function Userlist ({e}) {
+function Userlist ({e, currentUser}) {
 
 const [budget, setBudget] = useState("")
 
@@ -15,7 +17,6 @@ useEffect(() => {
             const newObject = {}
             newObject.totalBudget = key;
             newObject.concerts = e[key];
-            newObject.budgetName = newObject.concerts[0];
             newArray.push(newObject);
         }
     }
@@ -26,10 +27,9 @@ return (
     <div>
         {budgetCosts.map((e) => { 
                 return (
-                    
-                    <><h3>{e.budgetName}</h3>
+                    <><h3>{e.concerts[0].budgetname}</h3>
                     <h4>{e.totalBudget}</h4>
-                    <EventDetails e={e} /></>
+                    <EventDetails e={e} currentUser={currentUser} /></>
                     
                 )
             })}

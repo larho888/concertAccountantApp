@@ -13,12 +13,10 @@ const AddShow = (props) => {
   {
     name: props.ticket.name,
     max: props.ticket.max,
-    min: props.ticket.min
+    min: props.ticket.min,
+    budgetname: props.name,
+    budgetcost: props.budget
   }
-
-
-  console.log(moreUserSettings)
-
 
   const myList = () => {
     // Create a new post reference with an auto-generated id
@@ -30,8 +28,9 @@ const AddShow = (props) => {
 
   const handleRemove = () => {
     const database = getDatabase(firebase);
-    const dbRef = ref(database);
-    remove(dbRef, props.ticket);
+    const dbRef = ref(database, `/${props.currentUser}`);
+    console.log(dbRef)
+    // remove(dbRef, "0zVKC8rSa8dVLf1KZy8pq4OnxNA2");
   };
 
   return (

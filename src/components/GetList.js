@@ -4,10 +4,14 @@ import {firebase} from './Firebase';
 import Userlist from './Userlist';
 import { confirmPasswordReset } from 'firebase/auth';
 
-const GetList = () => {
+const GetList = ({user , track}) => {
     const [createdList, setCreatedList] = useState([]);
 
-    const {word, setWord} = useState([]);
+    const [currentUser, setCurrentUser] = useState('')
+
+    useEffect(() => {
+        setCurrentUser(user.uid)
+    })
 
     useEffect(() => {
         const db = getDatabase(firebase);
@@ -19,7 +23,7 @@ const GetList = () => {
             // console.log(data)
             for(let key in data){
                 // newArray.push({key:key, value:data[key]});
-                // console.log(data[key])
+                console.log(data[key])
                 const budgetNames = data[key];
                 // console.log(subData)
                 for (let budgetName in budgetNames) {
@@ -28,10 +32,11 @@ const GetList = () => {
                     for (let budgetCost in budgetObject) {
                         newObject[budgetCost] = []
                         const arrayOfConcerts = newObject[budgetCost] 
-                        arrayOfConcerts.push(budgetName)
+                        // arrayOfConcerts.push(budgetName)
                         const listId = budgetObject[budgetCost]
                         for (let id in listId) {
                             const listDetails = listId[id];
+                            listDetails.id = id
                             arrayOfConcerts.push(listId[id])
                             // for (let details in listDetails) {
                             //     const currentDetail = listDetails[details];
@@ -43,8 +48,6 @@ const GetList = () => {
                     newArray.push(newObject)
                 }
             }
-
-            // console.log(newArray)
            
             // for(let key in newArray){
             //     newerArray.push({key:key, value:newArray[key]})
@@ -53,15 +56,16 @@ const GetList = () => {
         })
     }, [])
 
-   
+
 
     return (
         <div>
                 {createdList.map((e) => { 
+                    console.log(e)
                     return (
                         <div>
                             <ul>
-                                <li><Userlist e={e} /> </li>
+                                <li><Userlist e={e} currentUser={currentUser}/> </li>
                             <li>
                             
                         </li>

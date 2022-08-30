@@ -4,6 +4,8 @@ import {auth} from './Firebase';
 import SearchResults from "./SearchResults";
 import GetPrivateList from "./GetPrivateList";
 import GetList from "./GetList";
+import Userlist from "./Userlist";
+import EventDetails from "./EventDetails";
 
 function Login () {
     
@@ -18,8 +20,6 @@ function Login () {
         setUser(currentUser);
     })
     }, [user]);
-
-    console.log(user.uid);
 
     const register = async () => {
         try {
@@ -38,6 +38,8 @@ function Login () {
     const logout = async () => {
         await signOut(auth);
     }
+
+    <EventDetails user={user}/>
 
     return (
         <><div className="login">
@@ -71,7 +73,7 @@ function Login () {
                 <button onClick={logout}>logout</button>
             </div>
         </div><SearchResults user={user} />
-        <GetList />
+        <GetList user={user}/>
         <GetPrivateList user={user} />
         </>
 
