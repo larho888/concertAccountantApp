@@ -2,16 +2,20 @@ import { useEffect, useState } from 'react';
 import { getDatabase, ref, onValue, remove } from 'firebase/database';
 import {firebase} from './Firebase';
 import Userlist from './Userlist';
-import { confirmPasswordReset } from 'firebase/auth';
+import { useSearchParams } from "react-router-dom";
+import Nav from './Nav';
+import Header from './Header';
 
-const GetList = ({user , track}) => {
+const GetList = () => {
     const [createdList, setCreatedList] = useState([]);
 
-    const [currentUser, setCurrentUser] = useState('')
+    const [currentUser, setCurrentUser] = useState('');
+
+    const [searchParams] = useSearchParams();
 
     useEffect(() => {
-        setCurrentUser(user.uid)
-    })
+        setCurrentUser((searchParams.get("userid")));
+      })
 
     useEffect(() => {
         const db = getDatabase(firebase);
@@ -23,7 +27,7 @@ const GetList = ({user , track}) => {
             // console.log(data)
             for(let key in data){
                 // newArray.push({key:key, value:data[key]});
-                console.log(data[key])
+                // console.log(data[key])
                 const budgetNames = data[key];
                 // console.log(subData)
                 for (let budgetName in budgetNames) {
@@ -38,11 +42,6 @@ const GetList = ({user , track}) => {
                             const listDetails = listId[id];
                             listDetails.id = id
                             arrayOfConcerts.push(listId[id])
-                            // for (let details in listDetails) {
-                            //     const currentDetail = listDetails[details];
-                            //     newBudgetObject[details] = currentDetail;
-                            // }
-
                         } 
                     }
                     newArray.push(newObject)
@@ -56,24 +55,22 @@ const GetList = ({user , track}) => {
         })
     }, [])
 
-
-
     return (
+        <>
+        <Nav user={currentUser} />
+        <Header />
         <div>
-                {createdList.map((e) => { 
-                    console.log(e)
-                    return (
-                        <div>
-                            <ul>
-                                <li><Userlist e={e} currentUser={currentUser}/> </li>
-                            <li>
-                            
-                        </li>
+            {createdList.map((e) => {
+                console.log(e)
+                return (
+                    <div>
+                        <ul>
+                            <li key={e.budgetName}><Userlist e={e} currentUser={currentUser} /> </li>
                         </ul>
-                        </div>
-                        )
-                })}
-        </div>
+                    </div>
+                );
+            })}
+        </div></> 
     )
 }
 

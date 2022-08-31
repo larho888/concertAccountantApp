@@ -3,11 +3,6 @@ import { getDatabase, push, ref, remove, set, update } from "firebase/database";
 import { firebase } from "./Firebase";
 
 const AddShow = (props) => {
-  const [userInput, setUserInput] = useState("");
-
-  const handleInputChange = (e) => {
-    setUserInput(e.target.value);
-  };
 
   const moreUserSettings =   
   {
@@ -21,7 +16,7 @@ const AddShow = (props) => {
   const myList = () => {
     // Create a new post reference with an auto-generated id
     const db = getDatabase();
-    const postListRef = ref(db, `/${props.currentUser}/${props.name}/${props.budget}`);
+    const postListRef = ref(db, `/${props.userId}/${props.name}/${props.budget}`);
     const newPostRef = push(postListRef);
     update(newPostRef, moreUserSettings)
   };

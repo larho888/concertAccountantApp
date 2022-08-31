@@ -21,7 +21,7 @@ useEffect(() => {
         }
     }
     setBudgetCosts(newArray);
-}, [])
+}, [e])
 
 return (
     <div>

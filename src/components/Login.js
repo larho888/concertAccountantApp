@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword} from "firebase/auth";
 import {auth} from './Firebase';
-import SearchResults from "./SearchResults";
-import GetPrivateList from "./GetPrivateList";
-import GetList from "./GetList";
-import Userlist from "./Userlist";
-import EventDetails from "./EventDetails";
+import Nav from "./Nav";
+import Header from "./Header";
 
 function Login () {
     
@@ -17,20 +14,20 @@ function Login () {
     const [user, setUser] = useState({});
 
     useEffect (() => { onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
+        setUser(currentUser.uid);
     })
     }, [user]);
 
     const register = async () => {
         try {
-            const newUser = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
+            await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
         } catch (error) {
         }
     }
 
     const login = async () => {
         try {
-            const newUser = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+            await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
         } catch (error) {
         }
     }
@@ -39,10 +36,12 @@ function Login () {
         await signOut(auth);
     }
 
-    <EventDetails user={user}/>
-
     return (
-        <><div className="login">
+        
+        <>
+        <Nav user={user}/> 
+        <Header />
+        <div className="login">
             <div>
                 <h3>Register</h3>
                 <input placeholder="email" onChange={(e) => {
@@ -63,7 +62,6 @@ function Login () {
                 <input placeholder="password" onChange={(e) => {
                     loginRegisterPassword(e.target.value);
                 } }></input>
-
                 <button onClick={login}>login</button>
             </div>
 
@@ -72,9 +70,7 @@ function Login () {
                 {user?.email}
                 <button onClick={logout}>logout</button>
             </div>
-        </div><SearchResults user={user} />
-        <GetList user={user}/>
-        <GetPrivateList user={user} />
+        </div>
         </>
 
     )

@@ -2,10 +2,21 @@
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
 import AddShow from "./AddShow";
-import Login from "./Login";
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
+import Header from "./Header";
+import Nav from "./Nav";
+import { Link , useSearchParams } from "react-router-dom";
 
-const SearchResults = (props) => {
+const SearchResults = () => {
+
+  const [searchParams] = useSearchParams();
+
+  const [userId, setUserId] = useState("");
+
+  useEffect(() => {
+    setUserId((searchParams.get("userid")));
+  })
+  console.log(userId)
+
  const [ticket, setTicket] = useState({
     name: "",
     id: "",
@@ -32,8 +43,6 @@ const SearchResults = (props) => {
   const [name, setName] = useState("");
 
   const [budget, setBudget] = useState("0");
-  
-  const [currentUser, setCurrentUser] = useState("");
 
     //api key
   const key = `0TsZKUciU5HKm4ylnIBkwVoD8U4aPAgY`;
@@ -54,7 +63,7 @@ const SearchResults = (props) => {
       const dataTest = response.data._embedded.events;
       setData(dataTest);
     }).catch((error) => {
-      alert(error.message)
+      alert("Please valid enter event")
     });
   } 
   
@@ -201,7 +210,7 @@ const SearchResults = (props) => {
                             >More info
                             </button>
                             {/* passing our addshow component that will handle the removal of adding user selected show into firebase */}
-                            <AddShow ticket={ticket} name={name} budget={budget} currentUser={currentUser}/>
+                            <AddShow ticket={ticket} name={name} budget={budget} userId={userId}/>
                         </div>
                     </li>
                 </ul>
@@ -212,30 +221,31 @@ const SearchResults = (props) => {
 
     //returning our rendered info named component, calling our getanswer function with our stored promised axios call
   return (
-    <div className="App wrapper" key={data.id}>
-        <form>
-            <input placeholder="insert list name" type="text" onChange={(e) => { setName(e.target.value)}}></input>
-            <input placeholder="insert budget" type="number" onChange ={(e) => { setBudget(e.target.value)}}></input>
-            <input value={keyWord} placeholder="Search for an Event" type="text" onChange={(e) => {
-                setKeyWord(e.target.value)
-            }} ></input>
-            <button onClick={(e) => {
-                e.preventDefault()
-                setTracker(prevCount => prevCount +1);
-                console.log(name , budget)
-                {             
-                  name === "" || budget === "0" || budget === "" || props.user === null
-               ? 
-                  alert('Please fill out all')
-               :
-                  setShow(true);
-                }    
-                getAnswer();
-                setCurrentUser(props.user.reloadUserInfo.localId)
-            }}>search</button>
-            {show ? renderInfo() : <React.Fragment />}
-        </form>
-    </div>
+    <>
+    <Nav user={userId}/>
+    <Header />
+    <div>
+      <form>
+        <input placeholder="insert list name" type="text" onChange={(e) => { setName(e.target.value); } }></input>
+        <input placeholder="insert budget" type="number" onChange={(e) => { setBudget(e.target.value); } }></input>
+        <input value={keyWord} placeholder="Search for an Event" type="text" onChange={(e) => {
+          setKeyWord(e.target.value);
+        } }></input>
+        <button onClick={(e) => {
+          e.preventDefault();
+          setTracker(prevCount => prevCount + 1);
+          {
+            name === "" || budget === "0" || budget === "" || userId === null
+              ?
+              alert('Please fill out all')
+              :
+              setShow(true);
+          }
+          getAnswer();
+        } }>search</button>
+        {show ? renderInfo() : <React.Fragment />}
+      </form>
+    </div></>
   );
 }
 
