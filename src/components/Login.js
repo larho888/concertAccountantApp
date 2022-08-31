@@ -4,6 +4,7 @@ import {auth} from './Firebase';
 import SearchResults from "./SearchResults";
 import GetPrivateList from "./GetPrivateList";
 import GetList from "./GetList";
+import { Link } from "react-router-dom";
 
 function Login () {
     
@@ -53,6 +54,10 @@ function Login () {
 
     return (
         <>
+        <ul>
+            <li><Link to="/components/SearchResults">Search For An Event</Link></li>
+            <li> <Link to="/components/GetList">View the Public Lists</Link></li>
+            </ul>
             <div className="authorization wrapper">
                 <div className="login">
                     <h3>Login</h3>
@@ -130,9 +135,9 @@ function Login () {
                 }
             
             </div>
-            <SearchResults user={user} />
+            {/* <SearchResults user={user} />
             <GetList />
-            <GetPrivateList user={user} />
+            <GetPrivateList user={user} /> */}
         </>
     )
 }

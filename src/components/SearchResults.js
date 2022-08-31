@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import AddShow from "./AddShow";
 import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import Login from "./Login";
+import { Link } from "react-router-dom";
 
 const SearchResults = (props) => {
  const [ticket, setTicket] = useState({
@@ -35,6 +36,9 @@ const SearchResults = (props) => {
   
   const [currentUser, setCurrentUser] = useState("");
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [eventsPerPage, setEventsPerPage] = useState(10);
+
     //api key
   const key = `0TsZKUciU5HKm4ylnIBkwVoD8U4aPAgY`;
  
@@ -48,7 +52,7 @@ const SearchResults = (props) => {
         format: "json",
         apikey: key,
         keyword: keyWord,
-        size: 10
+        size: eventsPerPage
       },
     }).then((response) => {
       const dataTest = response.data._embedded.events;
@@ -124,7 +128,7 @@ const SearchResults = (props) => {
     })
   }, [id]);
   
-  //Named function to be called on an event that will display more information on out api call   
+  //Named function to be called on an event that will display more information on our api call   
   const getMoreInfo = () => {
     return(
         <ul className="subMenu" key={ticket.name}>
@@ -148,6 +152,11 @@ const SearchResults = (props) => {
         </ul>
       )
   }
+
+  // Get current posts
+/*   const indexOfLastEvent = currentPage * eventsPerPage;
+  const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
+  const currentEvents = posts.slice(indexOfFirstEvent, indexOfLastEvent); */
 
     //Named function that will map over our api array and return the relevant search results for our user.
   const renderInfo = () => {
@@ -176,7 +185,7 @@ const SearchResults = (props) => {
 
                         {/* conditionally rendoring our call to the getmoreinfo function   */}
 
-                        {/* error handle to due to some api calls not containing a price range object */}
+                        {/* error handle due to some api calls not containing a price range object */}
                         <div className="box4">
                             <h3>Ticket Costs</h3>
                             {             
@@ -200,7 +209,7 @@ const SearchResults = (props) => {
                             <button onClick={(e) => {
                             e.preventDefault();    
                             setMoreInfo(!moreInfo);
-                            setId(data.id)
+                            setId(data.id);
                             }}
                             >More info
                             </button>                           
@@ -218,7 +227,12 @@ const SearchResults = (props) => {
     //returning our rendered info named component, calling our getanswer function with our stored promised axios call
   return (
     <div className="App wrapper" key={data.id}>
-        <form>
+       <ul>
+        <li><Link to="/">Home </Link></li>
+        <li><Link to="/components/GetList"> View the Public Lists</Link></li>
+        <li><Link to="/components/GetPrivateList"> View Your Private Lists</Link></li>
+      </ul>
+        <form className="search">
             <input placeholder="insert list name" type="text" onChange={(e) => { setName(e.target.value)}}></input>
             <input placeholder="insert budget" type="number" onChange ={(e) => { setBudget(e.target.value)}}></input>
             <input value={keyWord} placeholder="Search for an Event" type="text" onChange={(e) => {
@@ -231,8 +245,9 @@ const SearchResults = (props) => {
                 getAnswer();
                 setCurrentUser(props.user.reloadUserInfo.localId)
             }}>search</button>
-            {show ? renderInfo() : <React.Fragment />}
+            {/* {show ? renderInfo() : <React.Fragment />} */}
         </form>
+        {show ? renderInfo() : <React.Fragment />}
     </div>
   );
 }

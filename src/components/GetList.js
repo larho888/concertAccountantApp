@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getDatabase, ref, onValue, remove } from 'firebase/database';
 import {firebase} from './Firebase';
 import Userlist from './Userlist';
+import { Link } from "react-router-dom";
 import { confirmPasswordReset } from 'firebase/auth';
 
 const GetList = () => {
@@ -53,23 +54,28 @@ const GetList = () => {
         })
     }, [])
 
-   
-
     return (
-        <div>
-                {createdList.map((e) => { 
-                    return (
-                        <div>
-                            <ul>
-                                <li><Userlist e={e} /> </li>
-                            <li>
-                            
-                        </li>
-                        </ul>
+        <>
+        {createdList.map((e) => { 
+            return (
+                <section>
+                    <div className='wrapper'>
+                        <h2>Public List Page</h2>
+                        
+                        <Link to="/components/SearchResults">Search For An Event</Link>
+
+                        <div className='publicListContainer'>
+                            <ul className='publicList'>
+                                <li>
+                                    <Userlist e={e} /> 
+                                </li>
+                            </ul>
                         </div>
-                        )
-                })}
-        </div>
+                    </div>
+                </section>
+                )
+        })}
+        </>
     )
 }
 

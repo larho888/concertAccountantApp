@@ -4,8 +4,12 @@ return (
     <div>
         {e.concerts.map((e) => { 
                 return (
-                    <div>
-                    <><p>{e.max}</p><p>{e.min}</p><h3>{e.name}</h3></>
+                    <div className="eventDetails">
+                    <>
+                    <p>{e.max}</p>
+                    <p>{e.min}</p>
+                    <h3>{e.name}</h3>
+                    </>
                     </div>         
                 )
             })}

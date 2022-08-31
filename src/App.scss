@@ -181,6 +181,17 @@ header {
       }
     }
 }
+// Form element for listname, budget and keyword search input field
+.search {
+  display: flex;
+  column-gap: 10px;
+  justify-content: center;
+  >input {
+    padding: 10px 0 10px 10px;
+    border-radius: 5px;
+
+  }
+}
 
 body.active-modal {
   overflow-y: hidden;
@@ -247,10 +258,69 @@ body.active-modal {
 .moreInfoDiv {
   border: 1px solid black;
   border-top: none;
+  .subMenu {
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
 }
 
 .hideInfoDiv {
   display: none;
+}
+
+.publicListContainer {
+  box-shadow: 0 3px 6px 0 rgb(0, 0, 0);
+  background-color: $primary;
+  border-radius: 20px;
+  display: flex;
+  margin-top: 50px;
+}
+
+.privateListContainer {
+  box-shadow: 0 3px 6px 0 rgb(0, 0, 0);
+  display: flex;
+  border-radius: 20px;
+  margin-top: 50px;
+}
+
+.publicList,
+.privateList {
+  box-shadow: 0 3px 6px 0 rgb(0, 0, 0);
+  border-radius: 20px;
+  background-color: $secondary;
+  margin: 20px 40px;
+  width: calc((100% / 2) - 80px);
+  border: 5px solid red;
+}
+
+.userList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 5px solid red;
+}
+
+.eventDetails {
+  margin-bottom: 10px;
+  width: 80%;
+}
+
+.listTitle {
+  margin: 10px;
+}
+
+.budgetTitle {
+  margin: 10px;
+}
+
+.footer {
+  padding: 20px 0;
+  font-size: 25px;
+  width: 100%;
+  text-align: center;
+  background-color: white;
 }
 
 // .box5{

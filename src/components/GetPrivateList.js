@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getDatabase, ref, onValue, remove } from 'firebase/database';
 import {firebase} from './Firebase';
 import Userlist from './Userlist';
+import { Link } from "react-router-dom";
 import { confirmPasswordReset } from 'firebase/auth';
 
 const GetPrivateList = (props) => {
@@ -65,6 +66,7 @@ const GetPrivateList = (props) => {
                 {createdList.map((e) => {
                     return (
                         <div>
+                            <Link to="/components/SearchResults">Search For An Event</Link>
                             <ul>
                                 <li><Userlist e={e} /> </li>
                                 <li>
