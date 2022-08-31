@@ -3,11 +3,6 @@ import { getDatabase, push, ref, remove, set, update } from 'firebase/database';
 import { firebase } from './Firebase';
 
 const AddShow = (props) => {
-  const [userInput, setUserInput] = useState("");
-
-  const handleInputChange = (e) => {
-    setUserInput(e.target.value);
-  };
 
   const moreUserSettings =   
   {
