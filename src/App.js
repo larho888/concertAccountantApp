@@ -4,7 +4,7 @@ import SearchResults from "./components/SearchResults";
 import GetList from "./components/GetList";
 import GetPrivateList from "./components/GetPrivateList";
 import Login from "./components/Login";
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router-dom";
 
 function App({user}) {
   return(
