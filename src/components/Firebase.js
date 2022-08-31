@@ -15,4 +15,3 @@ const firebase = initializeApp(firebaseConfig);
 const auth = getAuth(firebase);
 
 export {firebase, auth}
-

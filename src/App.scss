@@ -12,6 +12,8 @@ $primary: #C0C8F0;
 $secondary: #97dae8;
 $tertiary:#dbf0ef;
 $fontColor:black;
+$white:white;
+$blue:#00a7e6; 
 
 // Font Variables
 $font: 'Maitree', serif;
@@ -25,6 +27,11 @@ $bodyFont: normal;
   width: 90%;
   margin: 0 auto;
   text-align: center;
+}
+
+.ticketLink{
+  text-decoration: none;
+  font-size:1.3rem;
 }
 
 body{
@@ -57,14 +64,145 @@ h3{
   margin: 0;
   padding: 0;
 }
-    //#endregion BASE STYLES END
 
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* input,
+ {
+  width: 100%;
+  max-width: 50%;
+  margin: 0 auto;
+} */
+    //#endregion BASE STYLES END
 
 
 //#region TYPOGRAPHY STYLES
 //#endregion TYPOGRAPHY STYLES
 
 //#region HEADER STYLES
+header {
+  margin-top: 5%;
+  line-height: 1.8;
+}
+//#endregion HEADER STYLES
+
+//#region INPUT STYLES
+.authorization {
+  text-align: center;
+  .login {
+    margin-top: 5%;
+    >input,
+      button {
+        margin-bottom: 1rem;
+        padding: 10px;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 50%;
+        margin: 0 auto 1rem;
+      }
+  }
+  .register,
+  .login {
+    display: flex;
+    flex-direction: column;
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    /* > input,
+    button {
+      margin-bottom: 1rem;
+      padding: 10px;
+      font-size: 1rem;
+      width: 100%;
+      max-width: 50%;
+      margin: 0 auto 1rem;
+    } */
+    /* .signUpModal {
+      display: flex;
+      justify-content: center;
+    } */
+    .signUpBtn {
+      max-width: fit-content;
+      padding: 5px 10px;
+      background-color: white;
+      // border: 1px solid $secondary;
+      border-radius: 5px;
+      margin-left: 5px;
+    }
+  }
+  .signUpModal,
+  .overlay {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+      a {
+        color: $fontColor;
+      }
+    }
+    .overlay {
+      background: rgba(49, 49, 49, 0.8);
+      display: flex;
+      justify-content: center;
+      .register {
+        position: absolute;
+        top: 30%;
+        // left: 30%;
+        margin: 0 auto;
+        background-color: $tertiary;
+        padding: 2rem;
+        border-radius: 5px;
+        width: 90%;
+        max-width: 600px;
+        min-width: 300px;
+        // z-index: 5;
+        >input,
+          button {
+            margin-bottom: 1rem;
+            padding: 10px;
+            font-size: 1rem;
+            width: 100%;
+            // max-width: 0%;
+            margin: 0 auto 1rem;
+          }
+        .signUpBtn {
+          max-width: 50%;
+          margin: 0 auto;
+        }
+        .closeSignUp {
+          max-width: fit-content;
+          padding: 5px 10px;
+          position: absolute;
+          right: 2rem;
+        }
+      }
+    }
+}
+// Form element for listname, budget and keyword search input field
+.search {
+  display: flex;
+  column-gap: 10px;
+  justify-content: center;
+  >input {
+    padding: 10px 0 10px 10px;
+    border-radius: 5px;
+
+  }
+}
+
+body.active-modal {
+  overflow-y: hidden;
+}
 //#endregion HEADER STYLES
 
 //#region INPUT STYLES
@@ -72,7 +210,10 @@ h3{
 
 //#region SEARCH RESULTS SECTION STYLES
 .container{
-  border: 1px solid black;
+  box-shadow: 0 3px 6px 0 rgb(0, 0, 0);
+  border: 1px solid $tertiary;
+  background-color: $white;
+  border-radius: 12px;
   height:200px;
   width: 100%;
   display: flex;
@@ -124,6 +265,147 @@ h3{
   }
 }
 
+.moreInfoDiv {
+  border: 1px solid black;
+  border-top: none;
+}
+
+.subMenu {
+  background-color: $primary;
+  box-shadow: 0 3px 6px 0px rgb(0, 0, 0);
+  border:1px solid $tertiary;
+  border-top: none;
+  width: 100%;
+  border-radius: 4px;
+  line-height: normal;
+  span{
+    font-weight: bold;
+  }
+}
+
+.actionButton {
+  box-shadow: inset 0 0 0 0 $white;
+  transition: ease-out 0.4s;
+  border: none;
+  border-radius: 4px;
+  margin-top: 10px;
+  width: 100px;
+  padding: 5px;
+  background-color: $fontColor;
+  text-transform: uppercase;
+  color: white;
+  cursor: pointer;
+  outline: none;
+  &:hover {
+    box-shadow: inset 200px 0 0 0 $white;
+    cursor: pointer;
+    color: $fontColor;
+  }
+}
+
+
+.hideInfoDiv {
+  display: none;
+}
+
+.publicListContainer {
+  box-shadow: 0 3px 6px 0 rgb(0, 0, 0);
+  background-color: $primary;
+  border-radius: 20px;
+  display: flex;
+  margin-top: 50px;
+}
+
+.privateListContainer {
+  box-shadow: 0 3px 6px 0 rgb(0, 0, 0);
+  display: flex;
+  border-radius: 20px;
+  margin-top: 50px;
+}
+
+.publicList,
+.privateList {
+  box-shadow: 0 3px 6px 0 rgb(0, 0, 0);
+  border-radius: 20px;
+  background-color: $secondary;
+  margin: 20px 40px;
+  width: calc((100% / 2) - 80px);
+  border: 5px solid red;
+}
+
+.userList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 5px solid red;
+}
+
+.eventDetails {
+  margin-bottom: 10px;
+  width: 80%;
+}
+
+.listTitle {
+  margin: 10px;
+}
+
+.budgetTitle {
+  margin: 10px;
+}
+
+.footer {
+  padding: 20px 0;
+  font-size: 25px;
+  width: 100%;
+  text-align: center;
+  background-color: white;
+}
+
+.publicListContainer{
+  box-shadow: 0 3px 6px 0 rgb(0, 0, 0);
+  background-color: $primary;
+  border-radius: 20px;
+  display: flex;
+  margin-top: 50px;
+}
+
+.privateListContainer{
+  box-shadow: 0 3px 6px 0 rgb(0, 0, 0);
+  display: flex;
+  border-radius: 20px;
+  margin-top: 50px;
+}
+
+.publicList, 
+.privateList{
+  box-shadow: 0 3px 6px 0 rgb(0, 0, 0);
+  border-radius: 20px;
+  background-color:$secondary;
+  margin: 20px 40px;
+  width: calc((100% / 2) - 80px);
+   border:5px solid red;
+}
+
+.userList{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+   border:5px solid red;
+}
+
+.eventDetails{
+  margin-bottom: 10px;
+  width: 80%;
+}
+
+.listTitle{
+  margin: 10px;
+}
+
+.budgetTitle{
+margin: 10px;
+}
+
 // .box5{
 //   border: 1px solid black;
 // }
@@ -137,3 +419,18 @@ h3{
 
 
 //#endregion SEARCH RESULTS SECTION STYLES
+
+//#region media queries
+@media (max-width: 450px) {
+  .authorization {
+    .register,
+    .login {
+      > input,
+        button {
+          width: 100%;
+          max-width: 100%;
+        }
+    }
+  }
+}
+//#endregion media queries

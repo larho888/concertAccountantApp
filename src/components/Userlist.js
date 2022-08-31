@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import EventDetails from "./EventDetails";
-import { getDatabase, push, ref, remove, set, update } from "firebase/database";
-import Login from "./Login";
 
 function Userlist ({e, currentUser}) {
 
@@ -23,20 +21,53 @@ useEffect(() => {
     setBudgetCosts(newArray);
 }, [e])
 
-return (
-    <div>
-        {budgetCosts.map((e) => { 
-                return (
-                    <><h3>{e.concerts[0].budgetname}</h3>
-                    <h4>{e.totalBudget}</h4>
-                    <EventDetails e={e} currentUser={currentUser} /></>
+// return (
+//     <div>
+//         {budgetCosts.map((e) => { 
+//                 return (
+//                     <><h3>{e.concerts[0].budgetname}</h3>
+//                     <h4>{e.totalBudget}</h4>
+//                     <EventDetails e={e} currentUser={currentUser} /></>
                     
-                )
-            })}
+//                 )
+//             })}
 
-    </div>
+//     </div>
               
 
+// )
+
+return(
+    <>
+		{budgetCosts.map((e) => {
+			return(
+				<>
+				{
+					e.totalBudget > 500 
+					? 
+					<>
+						<h2>Over $500 Lists</h2>
+						<div className="userList">
+							<h3 className="listTitle">List name: {e.concerts[0].budgetName}</h3>
+							<h4 className="budgetTitle">Budget Set: ${e.totalBudget}</h4>
+							<EventDetails e={e}/>
+						</div>
+					</>
+					: 
+					<> 
+						<h2>Under $500 Lists</h2>
+						<div className="userList">
+							<h3 className="listTitle">List name: {e.concerts[0].budgetName}</h3>
+							<h4 className="budgetTitle">Budget Set: ${e.totalBudget}</h4>
+							<EventDetails e={e}/>
+						</div>
+					</>
+		
+				}
+				</>
+			)
+		})}
+	</>
 )
 
    

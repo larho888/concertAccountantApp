@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Nav = ({ user }) => {
+    console.log(user)
   return (
     <>
         <ul>

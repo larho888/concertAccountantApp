@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import AddShow from "./AddShow";
 import Header from "./Header";
 import Nav from "./Nav";
-import { Link , useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const SearchResults = () => {
 
@@ -15,7 +15,6 @@ const SearchResults = () => {
   useEffect(() => {
     setUserId((searchParams.get("userid")));
   })
-  console.log(userId)
 
  const [ticket, setTicket] = useState({
     name: "",
@@ -33,8 +32,6 @@ const SearchResults = () => {
   const [keyWord, setKeyWord] = useState('');
 
   const [id, setId] = useState('');
-
-  const [track, setTracker] = useState(0);
 
   const [show, setShow] = useState(false);
 
@@ -57,7 +54,7 @@ const SearchResults = () => {
         format: "json",
         apikey: key,
         keyword: keyWord,
-        size: 10
+        size: 50
       },
     }).then((response) => {
       const dataTest = response.data._embedded.events;
@@ -137,17 +134,17 @@ const SearchResults = () => {
     return(
         <ul className="subMenu" key={ticket.name}>
 
-            <li><p>{ticket.address}</p></li>
-            <li><p>{ticket.timezone}</p></li>
-            <li><p>{ticket.time}</p></li>
+            <li ><p>{ticket.address}</p></li>
+            <li ><p>{ticket.timezone}</p></li>
+            <li ><p>{ticket.time}</p></li>
             {
                 ticket.url === undefined
                 ?
-                <li><p>link not available</p></li>
+                <li ><p>link not available</p></li>
                 :
-                <li><a href={ticket.url} target="_blank" rel="noreferrer">Ticket</a></li>
+                <li ><a href={ticket.url} target="_blank" rel="noreferrer" className="ticketLink">Get Tickets Here</a></li>
             }
-            
+            <AddShow ticket={ticket} name={name} budget={budget} userId={userId}/>
         </ul>
         
       )
@@ -159,8 +156,8 @@ const SearchResults = () => {
       return (
         <section>
             <div className="wrapper">
-                <ul key={data.id} className="mainMenu">
-                    <li className="container">
+                <ul className="mainMenu">
+                    <li className="container" key={data.id}>
                         <div className="box1">
                             <div className="box2">
                                 <img src={data.images[0].url} alt={data.name}/>
@@ -199,20 +196,20 @@ const SearchResults = () => {
                             }        
                         </div>
                         <div className="box5">
-
-                            {data.id === ticket.id && getMoreInfo()}
                             {/* event listener on our button to send the corresponding id stored in state as well as changing our moreInfo state to true */}
-                            <button onClick={(e) => {
+                            <button className="actionButton" onClick={(e) => {
                             e.preventDefault();    
-                            setMoreInfo(true);
+                            setMoreInfo(!moreInfo);
                             setId(data.id)
                             }}
                             >More info
                             </button>
                             {/* passing our addshow component that will handle the removal of adding user selected show into firebase */}
-                            <AddShow ticket={ticket} name={name} budget={budget} userId={userId}/>
                         </div>
                     </li>
+                    <div className="moreInfoDiv">
+                      {data.id === ticket.id && moreInfo ? getMoreInfo() : null}
+                    </div>
                 </ul>
             </div>
         </section>
@@ -224,16 +221,15 @@ const SearchResults = () => {
     <>
     <Nav user={userId}/>
     <Header />
-    <div>
-      <form>
+    <div className="App wrapper" key={data.id}>
+      <form className="search">
         <input placeholder="insert list name" type="text" onChange={(e) => { setName(e.target.value); } }></input>
         <input placeholder="insert budget" type="number" onChange={(e) => { setBudget(e.target.value); } }></input>
         <input value={keyWord} placeholder="Search for an Event" type="text" onChange={(e) => {
           setKeyWord(e.target.value);
         } }></input>
-        <button onClick={(e) => {
+        <button className="actionButton" onClick={(e) => {
           e.preventDefault();
-          setTracker(prevCount => prevCount + 1);
           {
             name === "" || budget === "0" || budget === "" || userId === null
               ?
@@ -243,8 +239,8 @@ const SearchResults = () => {
           }
           getAnswer();
         } }>search</button>
-        {show ? renderInfo() : <React.Fragment />}
       </form>
+      {show ? renderInfo() : <React.Fragment />}
     </div></>
   );
 }

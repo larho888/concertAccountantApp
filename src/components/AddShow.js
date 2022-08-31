@@ -1,6 +1,4 @@
-import { useState } from "react";
-import { getDatabase, push, ref, remove, set, update } from "firebase/database";
-import { firebase } from "./Firebase";
+import { getDatabase, push, ref, update } from "firebase/database";
 
 const AddShow = (props) => {
 
@@ -21,31 +19,16 @@ const AddShow = (props) => {
     update(newPostRef, moreUserSettings)
   };
 
-  const handleRemove = () => {
-    const database = getDatabase(firebase);
-    const dbRef = ref(database, `/${props.currentUser}`);
-    console.log(dbRef)
-    // remove(dbRef, "0zVKC8rSa8dVLf1KZy8pq4OnxNA2");
-  };
-
   return (
     <section>
       <div className="wrapper">
         <button
+        className="actionButton"
           onClick={(e) => {
-            e.preventDefault();
-            myList();
-          }}
-        >
-          Save
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            handleRemove();
-          }}>
-          remove
-        </button>
+          e.preventDefault();
+          myList();
+          }}>Save
+          </button>
       </div>
     </section>
   );
