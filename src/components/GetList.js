@@ -61,9 +61,7 @@ const GetList = () => {
                 <section>
                     <div className='wrapper'>
                         <h2>Public List Page</h2>
-                        
-                        <Link to="/components/SearchResults">Search For An Event</Link>
-
+                    
                         <div className='publicListContainer'>
                             <ul className='publicList'>
                                 <li>

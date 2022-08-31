@@ -227,11 +227,7 @@ const SearchResults = (props) => {
     //returning our rendered info named component, calling our getanswer function with our stored promised axios call
   return (
     <div className="App wrapper" key={data.id}>
-       <ul>
-        <li><Link to="/">Home </Link></li>
-        <li><Link to="/components/GetList"> View the Public Lists</Link></li>
-        <li><Link to="/components/GetPrivateList"> View Your Private Lists</Link></li>
-      </ul>
+       
         <form className="search">
             <input placeholder="insert list name" type="text" onChange={(e) => { setName(e.target.value)}}></input>
             <input placeholder="insert budget" type="number" onChange ={(e) => { setBudget(e.target.value)}}></input>

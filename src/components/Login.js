@@ -54,10 +54,14 @@ function Login () {
 
     return (
         <>
-        <ul>
-            <li><Link to="/components/SearchResults">Search For An Event</Link></li>
-            <li> <Link to="/components/GetList">View the Public Lists</Link></li>
-            </ul>
+        
+{/* 
+        <div>
+            <h3>User logged in</h3>
+            {user?.email}
+            <button onClick={logout}>logout</button>
+        </div> */}
+
             <div className="authorization wrapper">
                 <div className="login">
                     <h3>Login</h3>
@@ -73,12 +77,6 @@ function Login () {
                     disabled={!(loginEmail  && loginPassword)}
                     >Log In
                     </button>
-
-                    <div>
-                        <h3>User logged in</h3>
-                        {user?.email}
-                        <button onClick={logout}>logout</button>
-                    </div>
 
                     <p>
                         Don't have an account? 
