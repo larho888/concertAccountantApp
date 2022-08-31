@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword} from "firebase/auth";
 import {auth} from './Firebase';
-import SearchResults from "./SearchResults";
-import GetPrivateList from "./GetPrivateList";
-import GetList from "./GetList";
-import { Link } from "react-router-dom";
+
 
 function Login () {
     
@@ -22,18 +19,17 @@ function Login () {
     })
 }, [user]);
 
-// console.log(user.uid);
 
     const register = async () => {
         try {
-            const newUser = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
+            await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
         } catch (error) {
         }
     }
 
     const login = async () => {
         try {
-            const newUser = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+            await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
         } catch (error) {
         }
     }
@@ -54,28 +50,27 @@ function Login () {
 
     return (
         <>
-        
-{/* 
-        <div>
-            <h3>User logged in</h3>
-            {user?.email}
-            <button onClick={logout}>logout</button>
-        </div> */}
-
             <div className="authorization wrapper">
                 <div className="login">
                     <h3>Login</h3>
-                    <input placeholder="email" onChange={(e) => {
+                    <input 
+                        placeholder="email" 
+                        onChange={(e) => {
                         loginRegisterEmail(e.target.value);
-                    } }></input>
-                    <input placeholder="password" onChange={(e) => {
+                        }}>
+                    </input>
+
+                    <input 
+                        placeholder="password" 
+                        onChange={(e) => {
                         loginRegisterPassword(e.target.value);
-                    } }></input>
+                        }}>
+                    </input>
 
                     <button 
-                    onClick={login}
-                    disabled={!(loginEmail  && loginPassword)}
-                    >Log In
+                        onClick={login}
+                        disabled={!(loginEmail  && loginPassword)}
+                        >Log In
                     </button>
 
                     <p>
@@ -84,7 +79,6 @@ function Login () {
                         onClick={toggleModal}
                         className="signUpBtn"> 
                         Sign Up
-                            {/* <a href=""> Sign Up</a> */}
                         </button>
                     </p>
                 </div>
@@ -92,50 +86,41 @@ function Login () {
                 {
                     modal && (
                         <div className="signUpModal">
-                            <div 
-                            className="overlay"
-                            // onClick={toggleModal}
-                            >
-                            {/* </div> */}
+                            <div className="overlay">
                                 <div className="register">
                                     <h3>Register</h3>
-                                    <input placeholder="email" onChange={(e) => {
+                                    <input 
+                                        placeholder="email" 
+                                        onChange={(e) => {
                                         setRegisterEmail(e.target.value);
-                                    } }>
+                                        }}>
                                     </input>
-                                    <input placeholder="password" onChange={(e) => {
+
+                                    <input 
+                                        placeholder="password" 
+                                        onChange={(e) => {
                                         setRegisterPassword(e.target.value);
-                                    } }>
+                                        }}>
                                     </input>
+
                                     <button 
-                                    onClick={register}
-                                    disabled={!(registerEmail  && registerPassword)}
-                                    // onClick={toggleModal}
-                                    className="signUpBtn"> 
+                                        onClick={register}
+                                        disabled={!(registerEmail  && registerPassword)}
+                                        className="signUpBtn"> 
                                     Sign Up
                                     </button>
+
                                     <button
-                                    className="closeSignUp"
-                                    onClick={toggleModal}>
-                                        X
+                                        className="closeSignUp"
+                                        onClick={toggleModal}
+                                        >X
                                     </button>
-
-                                    {/* <button 
-                                    onClick={register}
-                                    >
-                                        Create User
-                                    </button> */}
                                 </div>
-
                             </div>
                         </div>
                     )
                 }
-            
             </div>
-            {/* <SearchResults user={user} />
-            <GetList />
-            <GetPrivateList user={user} /> */}
         </>
     )
 }

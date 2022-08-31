@@ -2,9 +2,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
 import AddShow from "./AddShow";
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
-import Login from "./Login";
-import { Link } from "react-router-dom";
 
 const SearchResults = (props) => {
  const [ticket, setTicket] = useState({
@@ -36,7 +33,6 @@ const SearchResults = (props) => {
   
   const [currentUser, setCurrentUser] = useState("");
 
-  const [currentPage, setCurrentPage] = useState(1);
   const [eventsPerPage, setEventsPerPage] = useState(10);
 
     //api key
@@ -57,7 +53,6 @@ const SearchResults = (props) => {
     }).then((response) => {
       const dataTest = response.data._embedded.events;
       setData(dataTest);
-      console.log(data)
     }).catch((error) => {
       alert(error.message)
     });

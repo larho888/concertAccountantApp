@@ -3,16 +3,14 @@ import Header from "./components/Header";
 import SearchResults from "./components/SearchResults";
 import GetList from "./components/GetList";
 import GetPrivateList from "./components/GetPrivateList";
-import { FaBeer } from 'react-icons/fa';
 import Login from "./components/Login";
-import { Link, Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 
 function App({user}) {
   return(
     <div>
 
       <Header />  
-      {/* <Login /> */}
 
 
       <Routes>

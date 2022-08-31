@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue, remove } from 'firebase/database';
+import { getDatabase, ref, onValue} from 'firebase/database';
 import {firebase} from './Firebase';
-import Userlist from './Userlist';
+import UserList from './UserList';
 import { Link } from "react-router-dom";
-import { confirmPasswordReset } from 'firebase/auth';
 
 const GetPrivateList = (props) => {
     const [createdList, setCreatedList] = useState([]);
@@ -15,14 +14,9 @@ const GetPrivateList = (props) => {
         const dbRef = ref(db);
         onValue(dbRef, (res) => {
             const newArray = [];
-            // const newerArray =[];
             const data = res.val();
-            // console.log(data)
             for(let key in data){
-                // newArray.push({key:key, value:data[key]});
-                // console.log(data[key])
                 const budgetNames = data[key];
-                // console.log(subData)
                 if (key === `${props.user.uid}`) { for (let budgetName in budgetNames) {
                     const newObject = {budgetName:budgetName};
                     const budgetObject = budgetNames[budgetName];
@@ -32,24 +26,12 @@ const GetPrivateList = (props) => {
                         arrayOfConcerts.push(budgetName)
                         const listId = budgetObject[budgetCost]
                         for (let id in listId) {
-                            const listDetails = listId[id];
                             arrayOfConcerts.push(listId[id])
-                            // for (let details in listDetails) {
-                            //     const currentDetail = listDetails[details];
-                            //     newBudgetObject[details] = currentDetail;
-                            // }
-
                         } 
                     }
                     newArray.push(newObject)
                 }}
             }
-
-            // console.log(newArray)
-           
-            // for(let key in newArray){
-            //     newerArray.push({key:key, value:newArray[key]})
-            // }
             setCreatedList(newArray);
         })
     }, [word])
@@ -57,26 +39,30 @@ const GetPrivateList = (props) => {
    
 
     return (
-        <><div>
+        <>
+        <div>
         <button onClick={(e) => {
-    e.preventDefault();    
-    setWord(props.user.uid);
-    }}>set</button>
-        </div><div>
-                {createdList.map((e) => {
-                    return (
-                        <div>
-                            <Link to="/components/SearchResults">Search For An Event</Link>
-                            <ul>
-                                <li><Userlist e={e} /> </li>
-                                <li>
+            e.preventDefault();    
+            setWord(props.user.uid);
+        }}>set
+        </button>
 
-                                </li>
-                            </ul>
-                        </div>
-                    );
-                })}
-            </div></>
+        </div>
+        <div>
+            {createdList.map((e) => {
+                return (
+                    <div>
+                        <Link to="/components/SearchResults">Search For An Event</Link>
+                        <ul>
+                            <li><UserList e={e} /> </li>
+                       
+                        </ul>
+
+                    </div>
+                );
+            })}
+        </div>
+        </>
     )
 }
 

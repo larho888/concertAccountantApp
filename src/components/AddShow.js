@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { getDatabase, push, ref, remove, set, update } from 'firebase/database';
+import { getDatabase, push, ref, remove, update } from 'firebase/database';
 import { firebase } from './Firebase';
 
 const AddShow = (props) => {
@@ -10,10 +9,6 @@ const AddShow = (props) => {
     min: props.ticket.max,
     max: props.ticket.min
   }
-
-
-  console.log(moreUserSettings);
-
 
   const myList = () => {
     // Create a new post reference with an auto-generated id
