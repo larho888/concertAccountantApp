@@ -21,22 +21,6 @@ useEffect(() => {
     setBudgetCosts(newArray);
 }, [e])
 
-// return (
-//     <div>
-//         {budgetCosts.map((e) => { 
-//                 return (
-//                     <><h3>{e.concerts[0].budgetname}</h3>
-//                     <h4>{e.totalBudget}</h4>
-//                     <EventDetails e={e} currentUser={currentUser} /></>
-                    
-//                 )
-//             })}
-
-//     </div>
-              
-
-// )
-
 return(
     <>
 		{budgetCosts.map((e) => {

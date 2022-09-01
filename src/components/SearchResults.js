@@ -12,10 +12,6 @@ const SearchResults = () => {
 
   const [userId, setUserId] = useState("");
 
-  useEffect(() => {
-    setUserId((searchParams.get("userid")));
-  })
-
  const [ticket, setTicket] = useState({
     name: "",
     id: "",
@@ -24,7 +20,8 @@ const SearchResults = () => {
     time: "",
     timezone: "",
     address: "",
-    url: ""
+    url: "",
+    img: ""
   })
   
   const [data, setData] = useState([]);
@@ -40,6 +37,10 @@ const SearchResults = () => {
   const [name, setName] = useState("");
 
   const [budget, setBudget] = useState("0");
+
+  useEffect(() => {
+    setUserId((searchParams.get("userid")));
+  }, [])
 
     //api key
   const key = `0TsZKUciU5HKm4ylnIBkwVoD8U4aPAgY`;
@@ -63,7 +64,7 @@ const SearchResults = () => {
       alert("Please valid enter event")
     });
   } 
-  
+
     //use effect axios call to store our api in the id state
   useEffect(() => {
     axios({
@@ -124,6 +125,13 @@ const SearchResults = () => {
                     'n/a'
                     :
                     (response.data.priceRanges[0].min)
+                ),
+            img: (
+                    response.data.images === undefined
+                    ? 
+                    'n/a'
+                    :
+                    (response.data.images[0].url)
                 )
         })
     })
