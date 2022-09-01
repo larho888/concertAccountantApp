@@ -11,33 +11,36 @@ function Login () {
     const [registerPassword, setRegisterPassword] = useState("");
     const [loginEmail, loginRegisterEmail] = useState("");
     const [loginPassword, loginRegisterPassword] = useState("");
+    const [email, setEmail] = useState("");
     const [ modal, setModal ] = useState(false);
     const [user, setUser] = useState({});
 
     useEffect (() => { onAuthStateChanged(auth, (currentUser) => {
         setUser(currentUser.uid);
+        setEmail(currentUser)
     })
     }, [user]);
 
     console.log(user)
 
-
     const register = async () => {
         try {
-            await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
+           const user =  await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
         } catch (error) {
         }
     }
 
     const login = async () => {
         try {
-            await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+          const user =  await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
         } catch (error) {
         }
     }
 
     const logout = async () => {
         await signOut(auth);
+        setUser(null)
+        setEmail(null)
     }
 
     const toggleModal = () => {
@@ -70,12 +73,12 @@ function Login () {
                         loginRegisterPassword(e.target.value);
                         }}>
                     </input>
+                    
+                    {/* <Link  onClick={login} className="loginButton"
+                    disabled={!(loginEmail  && loginPassword)} to={{pathname:"/SearchResults", search:`?userid=${user}`}}>Log In</Link> */}
 
-                    <button 
-                        onClick={login}
-                        disabled={!(loginEmail  && loginPassword)}
-                        ><Link to={{pathname:"/SearchResults", search:`?userid=${user}`}}>Log In</Link>
-                    </button>
+                    <button onClick={login} className="loginButton"
+                    disabled={!(loginEmail  && loginPassword)}>Log In</button>
 
                     <p>
                         Don't have an account? 
@@ -85,14 +88,13 @@ function Login () {
                         Sign Up
                         </button>
                     </p>
+
+                    
+            <h3 className="userLog">User logged in</h3>
+            <p className="userEmail">{email?.email}</p>
+            <button onClick={logout} className="logoutBtn">logout</button>
+         
                 </div>
-            
-            
-          <div>
-            <h3>User logged in</h3>
-            <p>{user?.email}</p>
-            <button onClick={logout}>logout</button>
-          </div>
 
                 {
                     modal && (
@@ -113,12 +115,14 @@ function Login () {
                                         setRegisterPassword(e.target.value);
                                         }}>
                                     </input>
-
-                                    <button 
-                                        onClick={register}
+                                    
+                                    {/* <Link onClick={register}
                                         disabled={!(registerEmail  && registerPassword)}
-                                        className="signUpBtn"> <Link to={{pathname:"/SearchResults", search:`?userid=${user}`}}>Sign Up</Link>
-                                    </button>
+                                        className="signUpBtn" to={{pathname:"/SearchResults", search:`?userid=${user}`}}>Sign Up</Link> */}
+
+                                    <button onClick={register}
+                                        disabled={!(registerEmail  && registerPassword)}
+                                        className="signUpBtn">Sign Up</button>
 
                                     <button
                                         className="closeSignUp"

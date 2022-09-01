@@ -54,7 +54,7 @@ const GetList = () => {
                         <div className='wrapper'>
                             <div className='publicListContainer'>
                                 <ul className='publicList'>
-                                    <li key={e.budgetName}>
+                                    <li key={e.budgetName} className='listChild'>
                                         <Userlist e={e} currentUser={currentUser} />
                                     </li>
                                 </ul>

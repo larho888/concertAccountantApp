@@ -166,12 +166,15 @@ const SearchResults = () => {
                             </div>
 
                             <div className="box3">
+                              <div>
                                 <h3>Date</h3>
                                 <p>{data.dates.start.localDate}</p>
-
+                              </div>
+                              <div>
                                 <h3 className="venueCity">Venue</h3>
                                 <p>{data._embedded.venues[0].city.name}</p>
                                 <p>{data._embedded.venues[0].name}</p>
+                              </div>
                             </div>
                         </div>
 
@@ -221,6 +224,10 @@ const SearchResults = () => {
     <>
     <Nav user={userId}/>
     <Header />
+    <div className="wrapper searchDetails">
+      <p>Enter your budget name, budget amount and then search for an event!</p>
+      <p>More info to save event and purchase tickets!</p>
+    </div>
     <div className="App wrapper" key={data.id}>
       <form className="search">
         <input placeholder="insert list name" type="text" onChange={(e) => { setName(e.target.value); } }></input>

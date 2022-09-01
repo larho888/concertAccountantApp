@@ -18,8 +18,8 @@ return (
                 return (
                     <div className="eventDetails" key={id}>
                     <>
-                    <p>{item.max}</p>
-                    <p>{item.min}</p>
+                    <p>min: ${item.max}</p>
+                    <p>max: ${item.min}</p>
                     <h3>{item.name}</h3>
                     </>
                     <button onClick={(e) => {
