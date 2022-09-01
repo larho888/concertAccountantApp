@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getDatabase, ref, onValue, remove } from 'firebase/database';
 import {firebase} from './Firebase';
-import Userlist from './Userlist';
+import PrivateUserlist from './PrivateUserList';
 import { useSearchParams } from "react-router-dom";
 import Nav from './Nav';
 import Header from './Header';
@@ -49,13 +49,14 @@ const GetPrivateList = () => {
     return (
         <><Nav user={currentUser} /><Header /><h2>Private List Page</h2><div>
             {createdList.map((e) => {
+                console.log(e)
                 return (
                     <section>
                         <div className='wrapper'>
                             <div className='publicListContainer'>
                                 <ul className='publicList'>
                                     <li key={e.budgetName}>
-                                        <Userlist e={e} currentUser={currentUser} />
+                                        <PrivateUserlist e={e} currentUser={currentUser} />
                                     </li>
                                 </ul>
                             </div>

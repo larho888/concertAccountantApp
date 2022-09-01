@@ -1,13 +1,13 @@
 import { getDatabase, ref, remove } from "firebase/database";
 import { firebase } from "./Firebase";
 
-function EventDetails ({e, currentUser}) {
+function PrivateEventDetails ({e, currentUser}) {
 
-// const handleRemove = (currentUser , budgetName, budgetTotal, id) => {
-//     const database = getDatabase(firebase);
-//     const dbRef = ref(database, `/${currentUser}/${budgetName}/${budgetTotal}/${id}`);
-//     remove(dbRef);
-//     }
+const handleRemove = (currentUser , budgetName, budgetTotal, id) => {
+    const database = getDatabase(firebase);
+    const dbRef = ref(database, `/${currentUser}/${budgetName}/${budgetTotal}/${id}`);
+    remove(dbRef);
+    }
 
 return (
     <div>
@@ -22,6 +22,9 @@ return (
                     <p>min: ${item.max}</p>
                     <p>max: ${item.min}</p>
                     </>
+                    <button onClick={(e) => {
+                        handleRemove(currentUser , name , cost , id);
+                    }}>remove</button>
                     </div>
                 )
             })}
@@ -29,5 +32,5 @@ return (
     )
 }
 
-export default EventDetails;
+export default PrivateEventDetails;
 

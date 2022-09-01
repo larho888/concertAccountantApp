@@ -120,7 +120,10 @@ function Login () {
                                         disabled={!(registerEmail  && registerPassword)}
                                         className="signUpBtn" to={{pathname:"/SearchResults", search:`?userid=${user}`}}>Sign Up</Link> */}
 
-                                    <button onClick={register}
+                                    <button onClick={()=> {
+                                        register();
+                                        toggleModal(!modal);
+                                    }}
                                         disabled={!(registerEmail  && registerPassword)}
                                         className="signUpBtn">Sign Up</button>
 
