@@ -20,8 +20,7 @@ const SearchResults = () => {
     time: "",
     timezone: "",
     address: "",
-    url: "",
-    img: ""
+    url: ""
   })
   
   const [data, setData] = useState([]);
@@ -40,7 +39,7 @@ const SearchResults = () => {
 
   useEffect(() => {
     setUserId((searchParams.get("userid")));
-  }, [])
+  })
 
     //api key
   const key = `0TsZKUciU5HKm4ylnIBkwVoD8U4aPAgY`;
@@ -125,13 +124,6 @@ const SearchResults = () => {
                     'n/a'
                     :
                     (response.data.priceRanges[0].min)
-                ),
-            img: (
-                    response.data.images === undefined
-                    ? 
-                    'n/a'
-                    :
-                    (response.data.images[0].url)
                 )
         })
     })

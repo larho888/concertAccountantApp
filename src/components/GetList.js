@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue, remove } from 'firebase/database';
+import { getDatabase, ref, onValue } from 'firebase/database';
 import {firebase} from './Firebase';
 import Userlist from './Userlist';
 import { useSearchParams } from "react-router-dom";
@@ -15,7 +15,7 @@ const GetList = () => {
 
     useEffect(() => {
         setCurrentUser((searchParams.get("userid")));
-      })
+      }, [])
 
     useEffect(() => {
         const db = getDatabase(firebase);
